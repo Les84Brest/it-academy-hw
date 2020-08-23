@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>ДЗ1 iShop</title>
+</head>
+
+<body>
+
+
+  <div class="main">
+    <div class="container">
+      <h1 class="home-work__title">
+        Магазин iShop
+      </h1>
+      <div class="ishop__goods">
+        <div class="ishop__item">
+          <div class="ishop__img">
+            <img src="https://content2.onliner.by/catalog/device/main/d8d846543063dffc787113c2702989f5.jpeg"
+              alt="image">
+
+          </div>
+          <div class="ishop__text-wrap">
+            <a href="/player-hifi-fiio-m3k-silver"> Название товара конечно же </a>
+            <div class="ishop__description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, sint
+              quae. Reprehenderit nemo neque.</div>
+          </div>
+          <div class="ishop__price">78.35</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <footer>
+    <span>Магазин iShop</span>
+  </footer>
+
+  <script src="https://unpkg.com/react@15/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+  <script src="IShop.js"></script>
+  <link rel="stylesheet" href="IShop.css">
+<script>
+    const data = [{ name: 'Плеер Hi-Fi FiiO M6', description: 'Hi-fi плеер', totalPrice: '450', slug: 'player-hifi-fiio-m6', photo: 'https://content2.onliner.by/catalog/device/main/7f6466846df898abdf8ad30ac269faf9.jpeg', inStock: '18' },
+    { name: 'Плеер Hi-Fi FiiO M3K (серебристый)', description: 'Hi-fi плеер', totalPrice: '650', slug: 'player-hifi-fiio-m3k-silver', photo: 'https://content2.onliner.by/catalog/device/main/d8d846543063dffc787113c2702989f5.jpeg', inStock: '62' },
+    { name: 'Ноутбук Lenovo IdeaPad S145-15API 81UT00FJRE', description: '15.6" 1920 x 1080 IPS, AMD Ryzen 3 3250U 2600 МГц, 8 ГБ, SSD 256 ГБ, граф. адаптер: встроенный, без ОС, цвет крышки золотистый', totalPrice: '390', slug: 'laptop-lenovo-ipad-s145', photo: 'https://content2.onliner.by/catalog/device/main/bc98ff23af68bd3a323f88268f3c8b16.jpeg', inStock: '22' },
+    { name: 'Ноутбук ASUS X509JA-EJ022', description: '15.6" 1920 x 1080 TN+Film, AMD Athlon 300U 2400 МГц, 8 ГБ, SSD 256 ГБ, граф. адаптер: встроенный, без ОС, цвет крышки серый', totalPrice: '785', slug: 'laptop-asus-x509ja', photo: 'https://content2.onliner.by/catalog/device/main/d8d846543063dffc787113c2702989f5.jpeg', inStock: '3' },
+    { name: 'Ноутбук Lenovo IdeaPad S145-15API 81UT000TRK', description: '15.6" 1920 x 1080 IPS, Intel Core i5 1035G1 1000 МГц, 8 ГБ, SSD 512 ГБ, граф. адаптер: встроенный, без ОС, цвет крышки темно-серый', totalPrice: '355', slug: 'laptop-lenovo-ipad-s145-15api', photo: 'https://content2.onliner.by/catalog/device/main/bc98ff23af68bd3a323f88268f3c8b16.jpeg', inStock: '78' },
+    { name: 'Ноутбук Acer Aspire 5 A515-44G-R7JZ NX.HW5EU.00E', description: '15.6" 1920 x 1080 TN+Film, AMD Athlon 300U 2400 МГц, 8 ГБ, SSD 256 ГБ, граф. адаптер: встроенный, без ОС, цвет крышки серый', totalPrice: '1450', slug: 'laptop-aser-aspire-5-a515', photo: 'https://content2.onliner.by/catalog/device/main/d8d846543063dffc787113c2702989f5.jpeg', inStock: '25' },
+    { name: 'Ноутбук Lenovo IdeaPad S340-15IIL 81VW00E8RE', description: '15.6" 1920 x 1080 IPS, Intel Core i5 1035G1 1000 МГц, 8 ГБ, SSD 512 ГБ, граф. адаптер: встроенный, без ОС, цвет крышки темно-серый', totalPrice: '680', slug: 'laptop-lenovo-ipad-s340', photo: 'https://content2.onliner.by/catalog/device/main/bc98ff23af68bd3a323f88268f3c8b16.jpeg', inStock: '13' },]
+
+
+    ReactDOM.render(
+      React.createElement(IShop, { dataSourse: data }),
+      document.querySelector('.ishop__goods'),
+    );
+  </script> 
+</body>
+
+</html>
