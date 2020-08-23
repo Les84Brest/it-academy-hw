@@ -6,7 +6,7 @@ var IShop = React.createClass({
 
     this.props.dataSourse.forEach(element => {
      let goodItem = 
-      React.DOM.div({key: Math.floor( Math.random() * 100000), className: 'ishop__item'},
+      React.DOM.div({key: element.key, className: 'ishop__item'},
         React.createElement('div', {className: "ishop__img"}, 
           React.createElement('img', {alt: 'good image', src: element.photo})
         ),
@@ -19,10 +19,7 @@ var IShop = React.createClass({
         ),
       
       );
-     
-     console.log(goodItem);
-     
-     
+       
       goods.push(goodItem);
     });
 
