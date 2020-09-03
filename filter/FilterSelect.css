@@ -1,0 +1,16 @@
+.filter__wrap{
+	min-width: 300px;
+}
+.filter__wrap .filter__resetbtn{
+	padding: 8px 12px;
+}
+.filter__wrap input{
+	padding: 8px 12px;
+	margin-right: 10px;
+}
+.filter__wrap .filter__strings{
+	
+	margin-top: 15px;
+	display: block;
+	width: 250px;
+}
