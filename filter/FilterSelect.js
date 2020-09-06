@@ -8,7 +8,6 @@ var FilterSelect = React.createClass({
   getInitialState: function () {
     return {
       stringArray: this.props.filterData,
-      oldStateArray: [], // в переменной будет храниться массив для отката
       filterTextValue: '', // текущее значение текста
       filterSortValue: false, // текущее значение чекбокса
 
@@ -16,37 +15,66 @@ var FilterSelect = React.createClass({
   },
 
   filterFindTextChanged: function (e) {
-    this.state.filterTextValue = e.target.value;
-    let findedArr = this.props.filterData.filter(item => {
-      let regexp = RegExp(e.target.value);
-
-      return item.match(regexp);
-
-    });
+    this.setState({ filterTextValue: e.target.value }, this.changeStringList);
     
-    this.setState({ stringArray: findedArr });
   },
 
-  filterSortClicked: function (e) {
+  filterSortChanged: function (e) {
+    this.setState({ filterSortValue: e.target.checked }, this.changeStringList);
+    
+  },
 
-      
-    this.state.filterSortValue = e.target.checked; // сохраянем состояние чекбокс в State
-    if (e.target.checked) {
-     
-      this.state.oldStateArray = this.state.stringArray.slice(0); // Клон массива для отката
-      this.state.stringArray.sort();
-      
-      this.setState({ stringArray: this.state.stringArray });
-    } else {
-       this.setState({ stringArray: this.state.oldStateArray });
+  changeStringList: function () {
+    console.log('Все поменяли');
+    let changedArr;
+    
+    if(this.state.filterSortValue == true){// сортируем
+      if(this.state.filterTextValue == ''){
+        
+        console.log('пустое значение фильтра');
+        changedArr = this.props.filterData.slice().sort(); //если значение фильтра не задано берем из props сортируем 
+        console.log(changedArr);
+        
+        return this.setState({stringData: changedArr});
+        
+      }else{
+        let rexp = RegExp(this.state.filterTextValue);
+        
+        changedArr = this.props.filterData.filter(item => {
+          
+          return item.match(rexp);
+        }).sort();
+        console.log(changedArr);
+        this.setState({stringData: changedArr});
+      }      
+    }else{//сортировать не нужно
+      if(this.state.filterTextValue == ''){//фильтр пустой
+        console.log('пустое значение фильтра');
+        changedArr = this.props.filterData.slice(); //если значение фильтра не задано берем из props
+        console.log(changedArr);
+        this.setState({stringData: changedArr});
+        
+      }else{//есть значение фильтра
+        changedArr = this.props.filterData.slice(0).filter(item => {
+          let rexp = RegExp(this.state.filterTextValue);
+          return item.match(rexp);
+        });
+        console.log(changedArr);
+        this.setState({stringData: changedArr});
+      }  
     }
-    
   },
+
 
   resetBtnClicked: function (e) {
-    this.setState({ stringArray: this.props.filterData,});
-      //  filterTextValue: '', filterSortValue: false }); //восстанавливаем данные для select
-
+    console.log('сброс');
+    this.setState({ stringArray: this.props.filterData,
+      filterTextValue: '', 
+      filterSortValue: false }, (){
+        console.log('chf,jasfd');
+      });
+   
+   
   },
   render: function () {
     let stringOptions = [];
@@ -57,9 +85,11 @@ var FilterSelect = React.createClass({
       stringOptions.push(item);
       count++;
     });
+    console.log("отработал рендер");
+    console.log(this.state.stringArray);
     return React.DOM.div({ className: "filter__wrap" },
-      React.DOM.input({ type: "checkbox", name: "filterSort", className: "filter__sort", onClick: this.filterSortClicked, defaultChecked: false, }),
-      React.DOM.input({ type: "text", name: "filterFind", className: "filter__find", placeholder: "поиск...", onChange: this.filterFindTextChanged, }),
+      React.DOM.input({ type: "checkbox", name: "filterSort", className: "filter__sort", onClick: this.filterSortChanged, value: this.state.filterSortValue, defaultChecked: false, }),
+      React.DOM.input({ type: "text", name: "filterFind", className: "filter__find", placeholder: "поиск...", onChange: this.filterFindTextChanged, value: this.state.filterTextValue, defaultValue: '', }),
       React.DOM.input({ type: "button", className: "filter__resetbtn", value: "Сброс", onClick: this.resetBtnClicked, }),
       React.DOM.select({ type: "button", className: "filter__strings", size: 7 },
         stringOptions
