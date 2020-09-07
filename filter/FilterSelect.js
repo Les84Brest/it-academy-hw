@@ -25,44 +25,20 @@ var FilterSelect = React.createClass({
   },
 
   changeStringList: function () {
-    console.log('меняем массив строк');
-    let changedArr;
-
-    if (this.state.filterSortValue == true) {// сортируем
-      if (this.state.filterTextValue == '') {
-
-        console.log('пустое значение фильтра');
-        changedArr = this.props.filterData.slice().sort(); //если значение фильтра не задано берем из props сортируем 
-        console.log(changedArr);
-
-        return this.setState({ stringArray: changedArr });
-
-      } else {
-        let rexp = RegExp(this.state.filterTextValue);
-
-        changedArr = this.props.filterData.filter(item => {
-
-          return item.match(rexp);
-        }).sort();
-        console.log(changedArr);
-        this.setState({ stringArray: changedArr });
-      }
-    } else {//сортировать не нужно
-      if (this.state.filterTextValue == '') {//фильтр пустой
-        console.log('пустое значение фильтра');
-        changedArr = this.props.filterData.slice(); //если значение фильтра не задано берем из props
-        console.log(changedArr);
-        this.setState({ stringArray: changedArr });
-
-      } else {//есть значение фильтра
-        changedArr = this.props.filterData.filter(item => {
-          let rexp = RegExp(this.state.filterTextValue);
-          return item.match(rexp);
-        });
-        console.log(changedArr);
-        this.setState({ stringArray: changedArr });
-      }
+    let arrDataCopy = this.props.filterData.slice(); // копия строк
+    
+    if(this.state.filterTextValue != ''){
+      arrDataCopy = arrDataCopy.filter(item => { //фильтруем, если надо
+        return item.includes(this.state.filterTextValue);
+      });
     }
+
+    if(this.state.filterSortValue){ // сортируем, если надо
+      arrDataCopy.sort();
+    }
+
+    this.setState({ stringArray: arrDataCopy });
+
   },
 
 
