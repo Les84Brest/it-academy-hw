@@ -1,9 +1,12 @@
 var GoodItem = React.createClass({
   displayName: 'GoodItem',
   propTypes: {
-    cbSelectedGood: React.PropTypes.function,
-    cbDeletedGood: React.PropTypes.function,
+    cbSelectedGood: React.PropTypes.func.isRequired,
+    cbDeletedGood: React.PropTypes.func.isRequired,
+    selectedGoodId: React.PropTypes.number,
+   
   },
+  
   // propTypes: {
 
   //   // dataSourse: React.PropTypes.shape({
@@ -35,13 +38,17 @@ var GoodItem = React.createClass({
   rowOnDelete: function () {
     if (confirm(`Вы действительно хотите удалить ${this.props.dataSourse.name} ?`)) {
       this.props.cbDeletedGood(this.props.dataSourse.id);
+      return ;
     }
   },
 
   render: function () {
+    let classItem =  this.state.goodClases.default;
+    if(this.props.selectedGoodId == this.props.goodId){
+      classItem = this.state.goodClases.selected;
+    }
 
-
-    return React.DOM.div({ className: this.props.isSelected ? this.state.className.selected : this.state.goodClases.default, onClick: this.rowOnClick, },
+    return React.DOM.div({ className: classItem, onClick: this.rowOnClick, },
       React.createElement('div', { className: "ishop__img" },
         React.createElement('img', { alt: 'good image', src: this.props.dataSourse.photo })
       ),

@@ -20,7 +20,7 @@ var IShop = React.createClass({
     return {
       goods: this.props.dataSourse.slice(0), // копия массива в goods
       selectId: null, //какой товар выбран
-      goodsForRender: [],
+     
     };
   },
 
@@ -31,27 +31,30 @@ var IShop = React.createClass({
   },
 
   deletedGood: function(rowNum){
-    console.log("удаляем " + rowNum);
-    
-    
+    console.log("удаляем " + rowNum);   
+    let arrWODelGoods = this.state.goods.filter(item => {
+      return !(item.id == rowNum);
+    })
+    this.setState({goods: arrWODelGoods});
   },
 
   render: function(){
     
-    
+    let goodsForRender = [];
     this.state.goods.forEach(element => {
       let good = React.createElement(GoodItem, { 
         key: element.id, 
+        goodId: element.id,
         dataSourse: element,
         cbSelectedGood: this.selectedGood,
         cbDeletedGood: this.deletedGood,
-        isSelected: this.state.selectId, // передаем признак, что товар выделен
+        selectedGoodId: this.state.selectId, // передаем признак, что товар выделен
       } );
-      this.state.goodsForRender.push(good);
+      goodsForRender.push(good);
      
     });
     
-    return React.DOM.div({className: "ishop__goods-list goods-list"}, this.state.goodsForRender);
+    return React.DOM.div({className: "ishop__goods-list goods-list"}, goodsForRender);
    
   }
 })
