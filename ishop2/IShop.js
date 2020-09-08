@@ -25,23 +25,23 @@ var IShop = React.createClass({
 
   selectedGood: (rowNum) =>{
     console.log("Строчка " + rowNum);
-    goodsForRender[rowNum]
+    
   },
 
   render: function(){
     
-    let count = 0;
+    let count = 1;
     this.state.goods.forEach(element => {
       let good = React.createElement(GoodItem, { 
         key: count, 
         dataSourse: element,
         cbSelectedGood: this.selectedGood,
-        rowNum: count,
+        goodId: count,
       } );
       this.state.goodsForRender.push(good);
       count++;
     });
-    console.log(this.state.goodsForRender);
+    
     return React.DOM.div({className: "ishop__goods-list goods-list"}, this.state.goodsForRender);
    
   }
