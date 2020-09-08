@@ -1,27 +1,22 @@
 var GoodItem = React.createClass({
   displayName: 'GoodItem',
+
   propTypes: {
     cbSelectedGood: React.PropTypes.func.isRequired,
     cbDeletedGood: React.PropTypes.func.isRequired,
     selectedGoodId: React.PropTypes.number,
-   
-  },
-  
-  // propTypes: {
+    dataSourse: React.PropTypes.shape({
+      name: React.PropTypes.string,
+      description: React.PropTypes.string,
+      totalPrice: React.PropTypes.number,
+      slug: React.PropTypes.string,
+      key: React.PropTypes.string,
+      photo: React.PropTypes.string, //путь к изображению
+      inStock: React.PropTypes.string, //доступно товара
+      id: React.PropTypes.number.isRequired,
+    }),
 
-  //   // dataSourse: React.PropTypes.shape({
-  //   //   name: React.PropTypes.string,
-  //   //   description: React.PropTypes.string,
-  //   //   totalPrice: React.PropTypes.number,
-  //   //   slug: React.PropTypes.string,
-  //   //   key: React.PropTypes.string,
-  //   //   photo: React.PropTypes.string, //путь к изображению
-  //   //   inStock: React.PropTypes.string, //доступно товара
-  //   // }),
-  //   // cbSelectedGood: React.PropTypes.function, //callback на выбор товара
-  //    goodId: React.PropTypes.number.isReqired,
-  //    isSelected: React.PropTypes.boolean,
-  // },
+  },
 
   getInitialState: function () {
     return {
@@ -38,13 +33,13 @@ var GoodItem = React.createClass({
   rowOnDelete: function () {
     if (confirm(`Вы действительно хотите удалить ${this.props.dataSourse.name} ?`)) {
       this.props.cbDeletedGood(this.props.dataSourse.id);
-      return ;
+      return;
     }
   },
 
   render: function () {
-    let classItem =  this.state.goodClases.default;
-    if(this.props.selectedGoodId == this.props.goodId){
+    let classItem = this.state.goodClases.default;
+    if (this.props.selectedGoodId == this.props.goodId) {// проверяем выделен ли товар
       classItem = this.state.goodClases.selected;
     }
 

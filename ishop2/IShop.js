@@ -24,16 +24,16 @@ var IShop = React.createClass({
     };
   },
 
-  selectedGood: function(rowNum){
-    console.log("Строчка " + rowNum);
-    this.setState({selectId: rowNum});
-    //this.setState({});
+  selectedGood: function(id){
+   
+    this.setState({selectId: id});
+    
   },
 
-  deletedGood: function(rowNum){
-    console.log("удаляем " + rowNum);   
+  deletedGood: function(id){
+    
     let arrWODelGoods = this.state.goods.filter(item => {
-      return !(item.id == rowNum);
+      return !(item.id == id);
     })
     this.setState({goods: arrWODelGoods});
   },
