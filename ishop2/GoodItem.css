@@ -63,6 +63,7 @@
 }
 .ishop__item .ishop__btndel{
   padding: 5px 10px;
+  text-transform: uppercase;
   
 }
 .ishop__item.row-selected{

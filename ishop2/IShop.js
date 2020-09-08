@@ -11,6 +11,7 @@ var IShop = React.createClass({
         key: React.PropTypes.string,
         photo: React.PropTypes.string, //путь к изображению
         inStock: React.PropTypes.string, //доступно товара
+        id: React.PropTypes.number, // id товара
       }),
     ).isRequired,
      
@@ -18,28 +19,36 @@ var IShop = React.createClass({
   getInitialState: function () {
     return {
       goods: this.props.dataSourse.slice(0), // копия массива в goods
-      selectRow: null, //какой товар выбран
+      selectId: null, //какой товар выбран
       goodsForRender: [],
     };
   },
 
-  selectedGood: (rowNum) =>{
+  selectedGood: function(rowNum){
     console.log("Строчка " + rowNum);
+    this.setState({selectId: rowNum});
+    //this.setState({});
+  },
+
+  deletedGood: function(rowNum){
+    console.log("удаляем " + rowNum);
+    
     
   },
 
   render: function(){
     
-    let count = 1;
+    
     this.state.goods.forEach(element => {
       let good = React.createElement(GoodItem, { 
-        key: count, 
+        key: element.id, 
         dataSourse: element,
         cbSelectedGood: this.selectedGood,
-        goodId: count,
+        cbDeletedGood: this.deletedGood,
+        isSelected: this.state.selectId, // передаем признак, что товар выделен
       } );
       this.state.goodsForRender.push(good);
-      count++;
+     
     });
     
     return React.DOM.div({className: "ishop__goods-list goods-list"}, this.state.goodsForRender);
