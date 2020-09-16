@@ -1,0 +1,26 @@
+{
+  "name": "nodejstrain",
+  "version": "1.2.33",
+  "description": "theme for train skills in node js",
+  "main": "main.js",
+  "scripts": {
+    "test": "hello world",
+    "startls": ".\\node_modules\\.bin\\lite-server"
+  },
+  "keywords": [
+    "hello",
+    "world"
+  ],
+  "author": "Alex Semen",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "browsersync": "0.0.1-security",
+    "lite-server": "^2.5.4",
+    "live-server": "^1.2.1",
+    "webpack": "^4.44.1"
+  }
+}
