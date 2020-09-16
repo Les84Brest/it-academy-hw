@@ -1,10 +1,9 @@
 import React from 'react';
 import "./GoodItem.css";
 
-var GoodItem = React.createClass({
-  displayName: 'GoodItem',
+class GoodItem extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     cbSelectedGood: React.PropTypes.func.isRequired,
     cbDeletedGood: React.PropTypes.func.isRequired,
     selectedGoodId: React.PropTypes.number,
@@ -18,29 +17,27 @@ var GoodItem = React.createClass({
       inStock: React.PropTypes.string, //доступно товара
       id: React.PropTypes.number.isRequired,
     }),
+  };
+  constructor(props) {
+    super(props);
+  }
 
-  },
+  state = {
+    goodClases: { default: 'ishop__item', selected: 'ishop__item row-selected' }, // 
+  };
 
-  getInitialState: function () {
-    return {
-      goodClases: { default: 'ishop__item', selected: 'ishop__item row-selected' }, // 
-
-    };
-  },
-
-  rowOnClick: function () {
-
+  rowOnClick = () =>  {
     this.props.cbSelectedGood(this.props.dataSourse.id);
-  },
+  }
 
-  rowOnDelete: function () {
+  rowOnDelete = () => {
     if (confirm(`Вы действительно хотите удалить ${this.props.dataSourse.name} ?`)) {
       this.props.cbDeletedGood(this.props.dataSourse.id);
       return;
     }
-  },
+  }
 
-  render: function () {
+  render() {
     let classItem = this.state.goodClases.default;
     if (this.props.selectedGoodId == this.props.goodId) {// проверяем выделен ли товар
       classItem = this.state.goodClases.selected;
@@ -62,6 +59,8 @@ var GoodItem = React.createClass({
 
     );
   }
-});
+
+}
+
 
 export default GoodItem;

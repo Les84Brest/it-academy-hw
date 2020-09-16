@@ -31,11 +31,11 @@ class IShop extends React.Component{
     goods: this.props.dataSourse.slice(0), // копия массива в goods
   };
 
-  selectedGood(id){
+  selectedGood = (id) => {
     this.setState({selectId: id});
   }
 
-  deletedGood(id){
+  deletedGood = (id) => {
     
     let arrWODelGoods = this.state.goods.filter(item => {
       return !(item.id == id);
