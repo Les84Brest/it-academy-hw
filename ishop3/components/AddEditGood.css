@@ -1,0 +1,36 @@
+.add-edit{
+	display: flex;
+	flex-direction: column;
+	margin: 10px  0 25px 0;
+}
+.add-edit .add-edit__item{
+	display: flex;
+	justify-content: start;
+	margin: 0 0	20px;
+	
+}
+.add-edit .add-edit__item-title{
+	display: block;
+	margin-bottom: 20px;
+}
+.add-edit .add-edit__validation{
+	font-size: 12px;
+	color: #e62424;
+}
+.add-edit .add-edit__item label{
+	min-width: 170px;
+	font-weight: 700;
+	display: block;
+	color: #3b3b3b;
+}
+
+.add-edit .add-edit__item span{
+	display: block;
+	margin-left: 15px;
+}
+
+.add-edit .add-edit__btn{
+	padding: 7px 10px;
+	margin-right: 10px;
+	text-transform: uppercase;
+}

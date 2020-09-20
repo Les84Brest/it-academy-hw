@@ -1,0 +1,22 @@
+.good-card h2{
+  display: block;
+  margin: 20px 0 20px 0;
+}
+.good-card img{
+  display: block;
+  width: 400px;
+}
+
+.good-card .good-card__wrapper{
+  display: flex;
+  padding: 20px 0 20px 0;
+}
+
+.good-card .good-card__line{
+  padding: 15px;
+  display: flex;
+}
+.good-card .good-card__line .good-card__name{
+  margin-right: 10px;
+  font-weight: 700;
+}

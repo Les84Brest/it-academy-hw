@@ -8,7 +8,8 @@ class GoodItem extends React.Component {
 
   static propTypes = {
     cbSelectedGood: PropTypes.func.isRequired,
-    cbDeletedGood: PropTypes.func.isRequired,
+    cbDeletedGood: PropTypes.func.isRequired, // callback на удаление товара
+    cbEditGood: PropTypes.func.isRequired, // callback на редактирование товара
     selectedGoodId: PropTypes.number,
     dataSourse: PropTypes.shape({
       name: PropTypes.string,
@@ -39,16 +40,16 @@ class GoodItem extends React.Component {
       return;
     }
   }
-
+  rowEdit = () => {
+    this.props.cbEditGood(this.props.dataSourse.id);
+  }
   render() {
     let classItem = this.state.goodClases.default;
     if (this.props.selectedGoodId == this.props.goodId) {// проверяем выделен ли товар
       classItem = this.state.goodClases.selected;
     }
     return (
-      <div
-        className={classItem}
-        onClick={this.rowOnClick} >
+      <div className={classItem} onClick={this.rowOnClick} >
         <div className="ishop__img">
           <img src={this.props.dataSourse.photo} alt="good image" />
         </div>
@@ -60,8 +61,8 @@ class GoodItem extends React.Component {
         </div>
         <div className="ishop__price"> {this.props.dataSourse.totalPrice}
           <span className="ishop__instock"> в наличии: {this.props.dataSourse.inStock}</span> 
-          <button className="ishop__btn" onClick={this.rowOnDelete}><img className="ishop__btn-img" src="../images/trash.svg" /></button>
-          <button className="ishop__btn" > <img className="ishop__btn-img" src="../images/pencil.svg" /> </button>
+          <button className="ishop__btn" onClick={this.rowOnDelete}><img className="ishop__btn-img" src="images/trash.svg" /></button>
+          <button className="ishop__btn" onClick={this.rowEdit} > <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
         </div>
       </div>
     );
