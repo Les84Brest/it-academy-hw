@@ -5,14 +5,15 @@ import './AddEditGood.css';
 
 class AddEditGood extends React.Component {
 
-  static MODE_EDIT = 2; // редактирование товара
-  static MODE_ADD_NEW = 3; // добавление нового товара
+  static MODE_EDIT = 1; // редактирование товара
+  static MODE_ADD_NEW = 2; // добавление нового товара
 
   constructor(props) {
     super(props);
 
     let otherArgs = {
-      tnSaveDisable: null,
+      btnSaveDisable: null,
+      beginEditing: false, // начато ли редактирование карточки
       modeTitle: {
         edit: "Редактируем данные",
         addNew: "Новый товар",
@@ -46,7 +47,8 @@ class AddEditGood extends React.Component {
 
    this.state = {...dataSourse, ...otherArgs};
     
-    
+    console.log('ПРОПСЫ ИЗ ЭДИТА');
+    console.log(props);
   }
 
   static propTypes = {
@@ -64,6 +66,7 @@ class AddEditGood extends React.Component {
     workMode: PropTypes.number.isRequired, // режим работы компонента
     cbSaveGood: PropTypes.func.isRequired,
     cbCancel: PropTypes.func.isRequired, // если нажата кнопка отмены
+    cbStartEditing: PropTypes.func.isRequired, // начало редактирования - команда на недоступность карточек
   }
 
   /*клики по кнопкам*/
@@ -89,29 +92,56 @@ class AddEditGood extends React.Component {
    */
 
   onChangeNameInput = (e) => {
-
-    this.setState({ name: e.target.value });
+    if (e.target.value == '' || e.target.value == NaN) {
+      this.setState({ name: e.target.value, nameErrorValidation: 'Значение не должно быть пустым', btnSaveDisable: true });
+    }else{
+      this.setState({ name: e.target.value, nameErrorValidation: null, btnSaveDisable: false });
+    }
+    this.props.cbStartEditing();
   }
 
   onChangeDescriptionTextArea = (e) => {
-    this.setState({ description: e.target.value });
+    if (e.target.value == '' || e.target.value == NaN) {
+      this.setState({ description: e.target.value, descriptionErrorValidation: 'Значение не должно быть пустым', btnSaveDisable: true });
+    }else{
+      this.setState({ description: e.target.value, descriptionErrorValidation: null, btnSaveDisable: false });
+    }
+
   }
 
   onChangePriceInput = (e) => {
+    if (e.target.value <= 0 || e.target.value == NaN) {
+      this.setState({ totalPrice: parseFloat(e.target.value), priceErrorValidation: 'Значение должно быть больше нуля', btnSaveDisable: true  });
+    }else{
+      this.setState({ totalPrice: parseFloat(e.target.value), priceErrorValidation: null, btnSaveDisable: false, });
+    }
 
-    this.setState({ totalPrice: parseFloat(e.target.value) });
   }
   onChangeInStockInput = (e) => {
-
-    this.setState({ inStock: parseFloat(e.target.value) });
+    if (e.target.value <= 0 || e.target.value == NaN) {
+      this.setState({ inStock: parseFloat(e.target.value), inStockErrorValidation: 'Значение должно быть больше нуля', btnSaveDisable: true  });
+    }else{
+      this.setState({ inStock: parseFloat(e.target.value), inStockErrorValidation: null, btnSaveDisable: false, });
+    }
+    
   }
   onChangePhotoInput = (e) => {
-
-    this.setState({ photo: e.target.value });
+    if (e.target.value == '' || e.target.value == NaN) {
+      this.setState({ photo: e.target.value, photoErrorValidation: 'Значение не должно быть пустым', btnSaveDisable: true });
+    }else{
+      this.setState({ photo: e.target.value, photoErrorValidation: null, btnSaveDisable: false });
+    }
+    
   }
   onChangeSlugInput = (e) => {
+    
+    if(e.target.value == '' || e.target.value == NaN){
+      this.setState({ slug: e.target.value, slugErrorValidation: 'Значение не должно быть пустым', btnSaveDisable: true,  });
+    }else{
+      this.setState({ slug: e.target.value, slugErrorValidation: null, btnSaveDisable: false,  });
+    }
 
-    this.setState({ slug: e.target.value });
+    
   }
 
   render() {
@@ -131,32 +161,32 @@ class AddEditGood extends React.Component {
         <div className="add-edit__item">
           <label>Название товара</label>
           <input type="text" name="GoodName" value={this.state.name} size="50" onChange={this.onChangeNameInput} />
-          <span className="add-edit__validation">текст валидации</span>
+          <span className="add-edit__validation">{this.state.nameErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Описание</label>
           <textarea type="text-area" rows="3" cols="85" className="add-edit__descr" onChange={this.onChangeDescriptionTextArea} value={this.state.description}></textarea>
-          <span className="add-edit__validation">текст валидации</span>
+          <span className="add-edit__validation">{this.state.descriptionErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Цена</label>
           <input type="number" value={this.state.totalPrice} onChange={this.onChangePriceInput} />
-          <span className="add-edit__validation">текст валидации</span>
+          <span className="add-edit__validation">{this.state.priceErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Доступно количество</label>
           <input type="number" value={this.state.inStock} onChange={this.onChangeInStockInput} />
-          <span className="add-edit__validation">текст валидации</span>
+          <span className="add-edit__validation">{this.state.inStockErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Ссылка на изображение</label>
           <input type="text" value={this.state.photo} onChange={this.onChangePhotoInput} />
-          <span className="add-edit__validation">текст валидации</span>
+      <span className="add-edit__validation">{this.state.photoErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Ссылка (slug)</label>
           <input type="text" value={this.state.slug} onChange={this.onChangeSlugInput} />
-          <span className="add-edit__validation">текст валидации</span>
+          <span className="add-edit__validation">{this.state.slugErrorValidation}</span>
         </div>
 
         {/* кнопки */}
@@ -164,9 +194,9 @@ class AddEditGood extends React.Component {
           {
             (this.props.workMode == AddEditGood.MODE_EDIT)
             ?
-            <button className="add-edit__btn save" onClick={this.btnSaveClick}>{this.state.btnSaveName.edit}</button>
+            <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.edit}</button>
             :
-            <button className="add-edit__btn save" onClick={this.btnSaveClick}>{this.state.btnSaveName.addNew}</button>
+            <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.addNew}</button>
 
           }
           

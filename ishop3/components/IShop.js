@@ -42,6 +42,7 @@ class IShop extends React.Component {
     workMode: IShop.MODE_DEFAULT, // по умолчанию моагазин в режиме просто показать таовары
     displayDetails: null, // изначально детали товара не показываем
     editedGood: null, // товар который редактируем
+    disableItemControls: false,
   };
 
   selectedGood = (id) => {
@@ -69,6 +70,10 @@ class IShop extends React.Component {
   addNewGood = () => {
     this.setState({workMode: IShop.MODE_ADD_NEW});
   }
+  startEditGood = () => { // callback начала редактирования карточки
+    this.setState( {disableItemControls: true}) ;
+  } 
+
   editGood = (id) =>{
     let editGood = this.state.goods.find(item => item.id == id);
     this.setState({editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null});
@@ -119,12 +124,12 @@ class IShop extends React.Component {
         }
         {/* редактируем товар */}
         {
-          (this.state.editedGood != null ) &&
-            <AddEditGood dataSourse={this.state.editedGood} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_EDIT} />
+          (this.state.editedGood != null  ) &&
+            <AddEditGood dataSourse={this.state.editedGood} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_EDIT} cbStartEditing={this.startEditGood}/>
         }
         {
           (this.state.workMode == IShop.MODE_ADD_NEW) &&
-          <AddEditGood dataSourse={null} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_ADD_NEW} />
+          <AddEditGood dataSourse={null} cbSaveGood={this.saveGood} cbCancel={this.editCanceled}  workMode={AddEditGood.MODE_ADD_NEW} cbStartEditing={this.startEditGood} />
         }
       </div>
 

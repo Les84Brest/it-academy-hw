@@ -13,8 +13,3 @@ ReactDOM.render(
     dataSourse={data}
   />, document.querySelector('.ishop__goods')  
 );
-
-//  ReactDOM.render(
-//    React.createElement(IShop, {dataSourse: data} ), 
-//    document.querySelector('.ishop__goods')
-//  );

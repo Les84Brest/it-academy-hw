@@ -11,6 +11,7 @@ class GoodItem extends React.Component {
     cbDeletedGood: PropTypes.func.isRequired, // callback на удаление товара
     cbEditGood: PropTypes.func.isRequired, // callback на редактирование товара
     selectedGoodId: PropTypes.number,
+    disableItemControls: PropTypes.bool,
     dataSourse: PropTypes.shape({
       name: PropTypes.string,
       description: PropTypes.string,
@@ -61,8 +62,8 @@ class GoodItem extends React.Component {
         </div>
         <div className="ishop__price"> {this.props.dataSourse.totalPrice}
           <span className="ishop__instock"> в наличии: {this.props.dataSourse.inStock}</span> 
-          <button className="ishop__btn" onClick={this.rowOnDelete}><img className="ishop__btn-img" src="images/trash.svg" /></button>
-          <button className="ishop__btn" onClick={this.rowEdit} > <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
+          <button className="ishop__btn" onClick={this.rowOnDelete} disabled={this.props.disableItemControls}><img className="ishop__btn-img" src="images/trash.svg" /></button>
+          <button className="ishop__btn" onClick={this.rowEdit} disabled={this.props.disableItemControls}> <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
         </div>
       </div>
     );
