@@ -35,14 +35,17 @@ class GoodItem extends React.Component {
     this.props.cbSelectedGood(this.props.dataSourse.id);
   }
 
-  rowOnDelete = () => {
+  rowOnDelete = (e) => {
+   // запрещаю всплытие, чтбы не переключился копонент в режим выделения
     if (confirm(`Вы действительно хотите удалить ${this.props.dataSourse.name} ?`)) {
       this.props.cbDeletedGood(this.props.dataSourse.id);
       return;
     }
   }
-  rowEdit = () => {
+  rowOnEdit = (e) => {
+   
     this.props.cbEditGood(this.props.dataSourse.id);
+    e.stopPropagation(); // запрещаю всплытие, чтбы не переключился копонент в режим выделения
   }
   render() {
     let classItem = this.state.goodClases.default;
@@ -63,7 +66,7 @@ class GoodItem extends React.Component {
         <div className="ishop__price"> {this.props.dataSourse.totalPrice}
           <span className="ishop__instock"> в наличии: {this.props.dataSourse.inStock}</span> 
           <button className="ishop__btn" onClick={this.rowOnDelete} disabled={this.props.disableItemControls}><img className="ishop__btn-img" src="images/trash.svg" /></button>
-          <button className="ishop__btn" onClick={this.rowEdit} disabled={this.props.disableItemControls}> <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
+          <button className="ishop__btn" onClick={this.rowOnEdit} disabled={this.props.disableItemControls}> <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
         </div>
       </div>
     );

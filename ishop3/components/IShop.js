@@ -29,7 +29,7 @@ class IShop extends React.Component {
         slug: PropTypes.string,
         key: PropTypes.string,
         photo: PropTypes.string, //путь к изображению
-        inStock: PropTypes.string, //доступно товара
+        inStock: PropTypes.number, //доступно товара
         id: PropTypes.number, // id товара
       }),
     ).isRequired,
@@ -70,8 +70,14 @@ class IShop extends React.Component {
   addNewGood = () => {
     this.setState({workMode: IShop.MODE_ADD_NEW});
   }
-  startEditGood = () => { // callback начала редактирования карточки
-    this.setState( {disableItemControls: true}) ;
+
+  startEditGood = (btnState) => { // callback начала редактирования карточки
+    // let disabledControlsGoods = this.state.goods.map(item => {
+    //     console.log(item);
+    //   return item;
+    // });
+    this.setState( {disableItemControls: btnState}) ;
+
   } 
 
   editGood = (id) =>{
@@ -106,17 +112,44 @@ class IShop extends React.Component {
         cbDeletedGood={this.deletedGood}
         cbEditGood={this.editGood}
         selectedGoodId={this.state.selectId}
+        disableItemControls={this.state.disableItemControls}
       />
 
       goodsForRender.push(good);
 
     });
-    console.log('перед рендером режим работы');
-    console.log(this.state.workMode);
+    
+    
+
+    switch (this.state.workMode) {
+      case IShop.MODE_ADD_NEW:
+        console.log('Режим новый товар');
+        break;
+      case IShop.MODE_EDIT:
+        console.log('Режим редактирование');
+        break;
+      case IShop.MODE_SHOW:
+        console.log('Режим выделение строки');
+        break;
+    
+      default:
+        console.log('Режим по умолчанию');
+        break;
+    }
+   
+
     return (
       <div className="ishop__goods-list goods-list">
         {goodsForRender}
-        <button className="ishop__goods-btn add" onClick={this.addNewGood}> новый товар </button>
+        {/* доступность кнопки товаров */}
+        {
+          ( this.state.workMode == IShop.MODE_EDIT || this.state.workMode == IShop.MODE_ADD_NEW  ) 
+          ?
+          <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={true}> новый товар </button> 
+          :
+          <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={false}> новый товар </button> 
+        }
+        
         {/* подробности по товару */}
         {
           (this.state.displayDetails != null && this.state.workMode == IShop.MODE_SHOW  ) &&
