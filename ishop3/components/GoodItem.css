@@ -82,3 +82,12 @@
 .ishop__item.row-selected{
   background-color: #c2dfcd;
 }
+/*выключенная кнопка*/
+.ishop__item button:disabled{
+  background-color: #dbdde2;
+  
+}
+.ishop__item button:disabled .ishop__btn-img{
+  opacity: 0.35;
+  
+}

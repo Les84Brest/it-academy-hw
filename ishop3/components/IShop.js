@@ -49,7 +49,7 @@ class IShop extends React.Component {
     console.log('selected');
     let displayGood = this.state.goods.find(item => item.id == id);
 
-    this.setState({ selectId: id, displayDetails: displayGood, workMode: IShop.MODE_SHOW,});
+    this.setState({ selectId: id, displayDetails: displayGood, workMode: IShop.MODE_SHOW, disableItemControls: false});
 
   }
 
@@ -63,6 +63,8 @@ class IShop extends React.Component {
       displayDetails: null, 
       workMode: IShop.MODE_DEFAULT, // товар удален переключаемся в обычный режим без выделения  
       selectId: null,
+      displayDetails: null, // изначально детали товара не показываем
+      editedGood: null, 
     });
   }
 
@@ -82,6 +84,8 @@ class IShop extends React.Component {
 
   editGood = (id) =>{
     let editGood = this.state.goods.find(item => item.id == id);
+    console.log(editGood);
+    console.log(editGood);
     this.setState({editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null});
   }
   saveGood = (good) => { // callback на сохранение товара
@@ -120,7 +124,7 @@ class IShop extends React.Component {
     });
     
     
-
+/*убрать */
     switch (this.state.workMode) {
       case IShop.MODE_ADD_NEW:
         console.log('Режим новый товар');
@@ -136,7 +140,7 @@ class IShop extends React.Component {
         console.log('Режим по умолчанию');
         break;
     }
-   
+/*убрать */   
 
     return (
       <div className="ishop__goods-list goods-list">
@@ -152,12 +156,12 @@ class IShop extends React.Component {
         
         {/* подробности по товару */}
         {
-          (this.state.displayDetails != null && this.state.workMode == IShop.MODE_SHOW  ) &&
+          (this.state.displayDetails != null && this.state.workMode == IShop.MODE_SHOW) &&
             <GoodCard dataSourse={this.state.displayDetails}/>
         }
         {/* редактируем товар */}
         {
-          (this.state.editedGood != null  ) &&
+          (this.state.editedGood != null && this.state.workMode == IShop.MODE_EDIT) &&
             <AddEditGood dataSourse={this.state.editedGood} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_EDIT} cbStartEditing={this.startEditGood}/>
         }
         {

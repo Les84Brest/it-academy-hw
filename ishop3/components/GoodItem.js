@@ -19,7 +19,7 @@ class GoodItem extends React.Component {
       slug: PropTypes.string,
       key: PropTypes.string,
       photo: PropTypes.string, //путь к изображению
-      inStock: PropTypes.string, //доступно товара
+      inStock: PropTypes.number, //доступно товара
       id: PropTypes.number.isRequired,
     }),
   };
@@ -39,7 +39,7 @@ class GoodItem extends React.Component {
    // запрещаю всплытие, чтбы не переключился копонент в режим выделения
     if (confirm(`Вы действительно хотите удалить ${this.props.dataSourse.name} ?`)) {
       this.props.cbDeletedGood(this.props.dataSourse.id);
-      return;
+      e.stopPropagation(); // запрещаю всплытие, чтбы не переключился копонент в режим выделения
     }
   }
   rowOnEdit = (e) => {
