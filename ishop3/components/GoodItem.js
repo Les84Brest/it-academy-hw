@@ -26,6 +26,7 @@ class GoodItem extends React.Component {
   constructor(props) {
     super(props);
   }
+  
 
   state = {
     goodClases: { default: 'ishop__item', selected: 'ishop__item row-selected' }, // 

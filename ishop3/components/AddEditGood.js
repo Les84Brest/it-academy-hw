@@ -34,17 +34,15 @@ class AddEditGood extends React.Component {
         photo: '',
         inStock: 0,
         id: Math.random(),
-       
+
       }
-      
+
     } else {
       dataSourse = props.dataSourse;
-
-      
     }
 
-   this.state = {dataSourse, ...otherArgs};    
-    
+    this.state = { dataSourse, ...otherArgs };
+
   }
 
   static propTypes = {
@@ -63,6 +61,23 @@ class AddEditGood extends React.Component {
     cbSaveGood: PropTypes.func.isRequired,
     cbCancel: PropTypes.func.isRequired, // если нажата кнопка отмены
     cbStartEditing: PropTypes.func.isRequired, // начало редактирования - команда на недоступность карточек
+   
+  }
+  /**
+   * Запускаем верификацию формы при создании нового компонента
+   */
+  componentDidMount() {
+    this.validationForm();
+    
+  }
+
+  componentDidUpdate = (oldProps, oldState) => {
+    if(this.props.dataSourse == null){
+      return;x
+    }
+    if (oldState.dataSourse.id != this.props.dataSourse.id) {
+       this.setState({dataSourse: this.props.dataSourse});
+    }
   }
 
   /*клики по кнопкам*/
@@ -94,10 +109,10 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.name = e.target.value;
-    
-    this.setState({ dataSourse: newDataSourse});
-   
-    
+
+    this.setState({ dataSourse: newDataSourse });
+
+
   }
 
   onChangeDescriptionTextArea = (e) => {
@@ -105,8 +120,8 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.description = e.target.value;
-    
-    this.setState({ dataSourse: newDataSourse});
+
+    this.setState({ dataSourse: newDataSourse });
 
   }
 
@@ -115,10 +130,10 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.totalPrice = parseFloat(e.target.value);
-    
-    this.setState({ dataSourse: newDataSourse});
 
-   
+    this.setState({ dataSourse: newDataSourse });
+
+
 
   }
   onChangeInStockInput = (e) => {
@@ -126,8 +141,8 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.inStock = parseFloat(e.target.value);
-    
-    this.setState({ dataSourse: newDataSourse});
+
+    this.setState({ dataSourse: newDataSourse });
 
 
   }
@@ -137,11 +152,11 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.photo = e.target.value;
-    
-    this.setState({ dataSourse: newDataSourse});
 
-    
-    
+    this.setState({ dataSourse: newDataSourse });
+
+
+
   }
   onChangeSlugInput = (e) => {
 
@@ -149,55 +164,55 @@ class AddEditGood extends React.Component {
 
     let newDataSourse = Object.assign({}, this.state.dataSourse); //копия dataSource
     newDataSourse.slug = e.target.value;
-    
-    this.setState({ dataSourse: newDataSourse});
-            
+
+    this.setState({ dataSourse: newDataSourse });
+
   }
 
-  validationForm = () =>{
+  validationForm = () => {
 
-      let btnSaveDisable = false;  // отключать кнопку сэйв
+    let btnSaveDisable = false;  // отключать кнопку сэйв
 
-      for (const key in this.state.dataSourse) {
-        
-        let changeState = new Object();
-        
-        switch (typeof this.state.dataSourse[key] ) {
-          case "string":
-            if(this.state.dataSourse[key] == '' || this.state.dataSourse[key] == NaN){
-              changeState[key + "ErrorValidation"] = 'Значение не должно быть пустым';
-              btnSaveDisable = true;
-              this.setState(changeState);
-            }else{
-              changeState[key + "ErrorValidation"] = null;
-              this.setState(changeState);
-            }
-            break;
+    for (const key in this.state.dataSourse) {
 
-            case "number":
-              if(this.state.dataSourse[key]  <= 0 || this.state.dataSourse[key] == NaN){
-                changeState[key + "ErrorValidation"] = 'Значение должно быть больше нуля';
-                btnSaveDisable = true;
-                this.setState(changeState);
-              }else{
-                changeState[key + "ErrorValidation"] = null; 
-                this.setState(changeState);
-              }
-           
-            break;
-        
-          default:
+      let changeState = new Object();
+
+      switch (typeof this.state.dataSourse[key]) {
+        case "string":
+          if (this.state.dataSourse[key] == '' || this.state.dataSourse[key] == NaN) {
+            changeState[key + "ErrorValidation"] = 'Значение не должно быть пустым';
+            btnSaveDisable = true;
+            this.setState(changeState);
+          } else {
             changeState[key + "ErrorValidation"] = null;
             this.setState(changeState);
-            break;
-        }
-          this.setState({btnSaveDisable: btnSaveDisable}); // Окончательно устанавливаем доступность кнопки сохранить
-        
+          }
+          break;
+
+        case "number":
+          if (this.state.dataSourse[key] <= 0 || this.state.dataSourse[key] == NaN) {
+            changeState[key + "ErrorValidation"] = 'Значение должно быть больше нуля';
+            btnSaveDisable = true;
+            this.setState(changeState);
+          } else {
+            changeState[key + "ErrorValidation"] = null;
+            this.setState(changeState);
+          }
+
+          break;
+
+        default:
+          changeState[key + "ErrorValidation"] = null;
+          this.setState(changeState);
+          break;
       }
+      this.setState({ btnSaveDisable: btnSaveDisable }); // Окончательно устанавливаем доступность кнопки сохранить
+
+    }
   }
 
   render() {
-   console.log(this.state);
+    console.log(this.state);
     return (
 
       <div className="add-edit">
@@ -227,13 +242,13 @@ class AddEditGood extends React.Component {
         </div>
         <div className="add-edit__item">
           <label>Доступно количество</label>
-          <input type="number" value={this.state.dataSourse.inStock} onChange={this.onChangeInStockInput} onBlur={this.validationForm}/>
+          <input type="number" value={this.state.dataSourse.inStock} onChange={this.onChangeInStockInput} onBlur={this.validationForm} />
           <span className="add-edit__validation">{this.state.inStockErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Ссылка на изображение</label>
-          <input type="text" value={this.state.dataSourse.photo} onChange={this.onChangePhotoInput} onBlur={this.validationForm}/>
-      <span className="add-edit__validation">{this.state.photoErrorValidation}</span>
+          <input type="text" value={this.state.dataSourse.photo} onChange={this.onChangePhotoInput} onBlur={this.validationForm} />
+          <span className="add-edit__validation">{this.state.photoErrorValidation}</span>
         </div>
         <div className="add-edit__item">
           <label>Ссылка (slug)</label>
@@ -245,13 +260,13 @@ class AddEditGood extends React.Component {
         <div className="add-edit__buttons">
           {
             (this.props.workMode == AddEditGood.MODE_EDIT)
-            ?
-            <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.edit}</button>
-            :
-            <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.addNew}</button>
+              ?
+              <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.edit}</button>
+              :
+              <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.addNew}</button>
 
           }
-          
+
           <button className="add-edit__btn cancel" onClick={this.btnCancelClick}>отмена</button>
         </div>
       </div>

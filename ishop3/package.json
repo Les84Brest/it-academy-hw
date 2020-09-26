@@ -5,7 +5,8 @@
   "main": "App.js",
   "scripts": {
     "build": ".\\node_modules\\.bin\\webpack",
-    "start": ".\\node_modules\\.bin\\lite-server"
+    "start": ".\\node_modules\\.bin\\lite-server",
+    "start-serv": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -18,11 +19,12 @@
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "lite-server": "^2.3.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

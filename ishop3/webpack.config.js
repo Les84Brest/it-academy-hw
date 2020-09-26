@@ -13,6 +13,7 @@ module.exports = {
         filename: "bundle.js"  // название создаваемого файла 
     }, 
     devtool:'source-map',
+    
     module:{ 
         rules:[
             { 
@@ -20,6 +21,7 @@ module.exports = {
                 exclude: /node_modules/, // какие файлы пропускать
                 use: { loader: "babel-loader" }
             },
+            
             {
                 test: /\.css$/,
                 use: extractCSS.extract({
@@ -28,6 +30,7 @@ module.exports = {
             }            
         ] 
     },
+    
     plugins: [
         extractCSS
     ]

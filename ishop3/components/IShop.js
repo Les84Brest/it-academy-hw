@@ -46,62 +46,64 @@ class IShop extends React.Component {
   };
 
   selectedGood = (id) => {
-    console.log('selected');
-    let displayGood = this.state.goods.find(item => item.id == id);
-
-    this.setState({ selectId: id, displayDetails: displayGood, workMode: IShop.MODE_SHOW, disableItemControls: false});
-
+    // отрабатываем клик только магазин не в режиме редактирования или добавления товара
+    if (this.state.workMode == IShop.MODE_EDIT || this.state.workMode == IShop.MODE_ADD_NEW) {
+      return;
+    } else {
+      let displayGood = this.state.goods.find(item => item.id == id);
+      this.setState({ selectId: id, displayDetails: displayGood, workMode: IShop.MODE_SHOW, disableItemControls: false });
+    }
   }
 
   deletedGood = (id) => {
 
     let arrWODelGoods = this.state.goods.filter(item => {
       return !(item.id == id);
-    }) 
+    })
 
-    this.setState({ goods: arrWODelGoods, 
-      displayDetails: null, 
+    this.setState({
+      goods: arrWODelGoods,
+      displayDetails: null,
       workMode: IShop.MODE_DEFAULT, // товар удален переключаемся в обычный режим без выделения  
       selectId: null,
       displayDetails: null, // изначально детали товара не показываем
-      editedGood: null, 
+      editedGood: null,
     });
   }
 
 
   addNewGood = () => {
-    this.setState({workMode: IShop.MODE_ADD_NEW});
+    // добавляем новый товар, выделение строки снимается
+    this.setState({ workMode: IShop.MODE_ADD_NEW, selectId: null, displayDetails: null,  });
   }
+  /**callback данные товара изменены - запретить создание и редактирование новых */
+  startEditGood = (btnState) => {
 
-  startEditGood = (btnState) => { // callback начала редактирования карточки
-    // let disabledControlsGoods = this.state.goods.map(item => {
-    //     console.log(item);
-    //   return item;
-    // });
-    this.setState( {disableItemControls: btnState}) ;
+    this.setState({ disableItemControls: btnState,  });
 
-  } 
+  }
+  
 
-  editGood = (id) =>{
+  editGood = (id) => {
     let editGood = this.state.goods.find(item => item.id == id);
     console.log(editGood);
     console.log(editGood);
-    this.setState({editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null});
+    this.setState({ editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null, selectId: null });
   }
   saveGood = (good) => { // callback на сохранение товара
-    if(good == null){ // если передан null значит нужно закрыть редактирование товара
-     this.setState({workMode: IShop.MODE_DEFAULT, editedGood: null})
-     return;
+    if (good == null) { // если передан null значит нужно закрыть редактирование товара
+      this.setState({ workMode: IShop.MODE_DEFAULT, editedGood: null })
+      return;
     }
     let changedGoods = this.state.goods.slice();
     let goodKey = changedGoods.findIndex(item => item.id == good.id);
     changedGoods.splice(goodKey, 1, good);
-    this.setState({goods: changedGoods, editedGood: null, workMode: IShop.MODE_DEFAULT});
-                          
+    this.setState({ goods: changedGoods, editedGood: null, workMode: IShop.MODE_DEFAULT });
+
   }
 
   editCanceled = () => {
-    this.setState({workMode: IShop.MODE_DEFAULT, editedGood: null});
+    this.setState({ workMode: IShop.MODE_DEFAULT, editedGood: null });
   }
 
 
@@ -122,9 +124,9 @@ class IShop extends React.Component {
       goodsForRender.push(good);
 
     });
-    
-    
-/*убрать */
+
+
+    /*убрать */
     switch (this.state.workMode) {
       case IShop.MODE_ADD_NEW:
         console.log('Режим новый товар');
@@ -135,38 +137,38 @@ class IShop extends React.Component {
       case IShop.MODE_SHOW:
         console.log('Режим выделение строки');
         break;
-    
+
       default:
         console.log('Режим по умолчанию');
         break;
     }
-/*убрать */   
+    /*убрать */
 
     return (
       <div className="ishop__goods-list goods-list">
         {goodsForRender}
         {/* доступность кнопки товаров */}
         {
-          ( this.state.workMode == IShop.MODE_EDIT || this.state.workMode == IShop.MODE_ADD_NEW  ) 
-          ?
-          <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={true}> новый товар </button> 
-          :
-          <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={false}> новый товар </button> 
+          (this.state.workMode == IShop.MODE_EDIT || this.state.workMode == IShop.MODE_ADD_NEW)
+            ?
+            <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={true}> новый товар </button>
+            :
+            <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={false}> новый товар </button>
         }
-        
+
         {/* подробности по товару */}
         {
           (this.state.displayDetails != null && this.state.workMode == IShop.MODE_SHOW) &&
-            <GoodCard dataSourse={this.state.displayDetails}/>
+          <GoodCard dataSourse={this.state.displayDetails} />
         }
         {/* редактируем товар */}
         {
           (this.state.editedGood != null && this.state.workMode == IShop.MODE_EDIT) &&
-            <AddEditGood dataSourse={this.state.editedGood} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_EDIT} cbStartEditing={this.startEditGood}/>
+          <AddEditGood dataSourse={this.state.editedGood} cbSaveGood={this.saveGood} cbCancel={this.editCanceled} workMode={AddEditGood.MODE_EDIT} cbStartEditing={this.startEditGood} />
         }
         {
           (this.state.workMode == IShop.MODE_ADD_NEW) &&
-          <AddEditGood dataSourse={null} cbSaveGood={this.saveGood} cbCancel={this.editCanceled}  workMode={AddEditGood.MODE_ADD_NEW} cbStartEditing={this.startEditGood} />
+          <AddEditGood dataSourse={null} cbSaveGood={this.saveGood}  cbCancel={this.editCanceled} workMode={AddEditGood.MODE_ADD_NEW} cbStartEditing={this.startEditGood} />
         }
       </div>
 
