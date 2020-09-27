@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from './Button';
+
 import "./GoodItem.css";
 
 
@@ -66,8 +68,8 @@ class GoodItem extends React.Component {
         </div>
         <div className="ishop__price"> {this.props.dataSourse.totalPrice}
           <span className="ishop__instock"> в наличии: {this.props.dataSourse.inStock}</span> 
-          <button className="ishop__btn" onClick={this.rowOnDelete} disabled={this.props.disableItemControls}><img className="ishop__btn-img" src="images/trash.svg" /></button>
-          <button className="ishop__btn" onClick={this.rowOnEdit} disabled={this.props.disableItemControls}> <img className="ishop__btn-img" src="images/pencil.svg" /> </button>
+          <Button onClick={this.rowOnDelete} disabled={this.props.disableItemControls}><img className="ishop__btn-img" src="images/trash.svg" /></Button>
+          <Button onClick={this.rowOnEdit} disabled={this.props.disableItemControls}> <img className="ishop__btn-img" src="images/pencil.svg" /> </Button>
         </div>
       </div>
     );

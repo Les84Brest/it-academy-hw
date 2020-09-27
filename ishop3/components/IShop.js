@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import GoodItem from './GoodItem';
 import GoodCard from './GoodCard';
 import AddEditGood from './AddEditGood';
+import Button from './Button';
 
 
 import './iShop.css';
@@ -90,12 +91,22 @@ class IShop extends React.Component {
     console.log(editGood);
     this.setState({ editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null, selectId: null });
   }
+
   saveGood = (good) => { // callback на сохранение товара
     if (good == null) { // если передан null значит нужно закрыть редактирование товара
       this.setState({ workMode: IShop.MODE_DEFAULT, editedGood: null })
       return;
     }
+   
     let changedGoods = this.state.goods.slice();
+    //если в режиме добавления ногового товара то просто добавляем товар в конец
+    if(this.state.workMode == IShop.MODE_ADD_NEW){
+      changedGoods.push(good);
+      this.setState({goods: changedGoods, editedGood: null, workMode: IShop.MODE_DEFAULT});
+      return;
+
+    }
+
     let goodKey = changedGoods.findIndex(item => item.id == good.id);
     changedGoods.splice(goodKey, 1, good);
     this.setState({ goods: changedGoods, editedGood: null, workMode: IShop.MODE_DEFAULT });
@@ -146,14 +157,15 @@ class IShop extends React.Component {
 
     return (
       <div className="ishop__goods-list goods-list">
+       
         {goodsForRender}
         {/* доступность кнопки товаров */}
         {
           (this.state.workMode == IShop.MODE_EDIT || this.state.workMode == IShop.MODE_ADD_NEW)
             ?
-            <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={true}> новый товар </button>
+            <Button  onClick={this.addNewGood} disabled> новый товар </Button>
             :
-            <button className="ishop__goods-btn add" onClick={this.addNewGood} disabled={false}> новый товар </button>
+            <Button  onClick={this.addNewGood} > новый товар </Button>
         }
 
         {/* подробности по товару */}

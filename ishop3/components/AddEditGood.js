@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Button from './Button';
 
 import './AddEditGood.css';
 
@@ -24,16 +25,17 @@ class AddEditGood extends React.Component {
       },
     };
     let dataSourse;
+    
     if (props.workMode == AddEditGood.MODE_ADD_NEW && props.dataSourse == null) {
       dataSourse = {
         name: '',
         description: '',
         totalPrice: 0,
         slug: '',
-        key: Math.random().toString(),
+        key: null,
         photo: '',
         inStock: 0,
-        id: Math.random(),
+        id: null,
 
       }
 
@@ -73,26 +75,29 @@ class AddEditGood extends React.Component {
 
   componentDidUpdate = (oldProps, oldState) => {
     if(this.props.dataSourse == null){
-      return;x
+      return;
     }
     if (oldState.dataSourse.id != this.props.dataSourse.id) {
-       this.setState({dataSourse: this.props.dataSourse});
+       
+       this.setState({dataSourse: this.props.dataSourse })
     }
   }
 
   /*клики по кнопкам*/
   btnSaveClick = () => {
+    let newKey = Math.floor(Math.random()*15000);
     //сохраняем введенный товар
     this.props.cbSaveGood({
       name: this.state.dataSourse.name,
       description: this.state.dataSourse.description,
       totalPrice: this.state.dataSourse.totalPrice,
       slug: this.state.dataSourse.slug,
-      key: this.state.dataSourse.key,
+      key: newKey,
       photo: this.state.dataSourse.photo,
       inStock: this.state.dataSourse.inStock,
-      id: this.state.dataSourse.id,
+      id: newKey,
     })
+
     this.props.cbStartEditing(false);
   }
 
@@ -261,13 +266,13 @@ class AddEditGood extends React.Component {
           {
             (this.props.workMode == AddEditGood.MODE_EDIT)
               ?
-              <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.edit}</button>
+              <Button  onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.edit}</Button>
               :
-              <button className="add-edit__btn save" onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.addNew}</button>
+              <Button  onClick={this.btnSaveClick} disabled={this.state.btnSaveDisable}>{this.state.btnSaveName.addNew}</Button>
 
           }
 
-          <button className="add-edit__btn cancel" onClick={this.btnCancelClick}>отмена</button>
+          <Button onClick={this.btnCancelClick}>отмена</Button>
         </div>
       </div>
 

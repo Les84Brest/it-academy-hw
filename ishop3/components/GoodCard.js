@@ -12,7 +12,7 @@ class GoodCard extends React.Component {
   constructor(props) {
     super(props);
   }
-  static PropTypes = {
+  static propTypes = {
 
     dataSourse: PropTypes.shape({
       name: PropTypes.string,
@@ -21,7 +21,7 @@ class GoodCard extends React.Component {
       slug: PropTypes.string,
       key: PropTypes.string,
       photo: PropTypes.string, //путь к изображению
-      inStock: PropTypes.string, //доступно товара
+      inStock: PropTypes.number, //доступно товара
       id: PropTypes.number.isRequired,
     }),
   };
