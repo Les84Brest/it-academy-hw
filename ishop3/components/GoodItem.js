@@ -19,7 +19,7 @@ class GoodItem extends React.Component {
       description: PropTypes.string,
       totalPrice: PropTypes.number,
       slug: PropTypes.string,
-      key: PropTypes.string,
+      key: PropTypes.any,
       photo: PropTypes.string, //путь к изображению
       inStock: PropTypes.number, //доступно товара
       id: PropTypes.number.isRequired,

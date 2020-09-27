@@ -53,10 +53,10 @@ class AddEditGood extends React.Component {
       description: PropTypes.string,
       totalPrice: PropTypes.number,
       slug: PropTypes.string,
-      key: PropTypes.string,
+      key: PropTypes.any,
       photo: PropTypes.string, //путь к изображению
       inStock: PropTypes.number, //доступно товара
-      id: PropTypes.number, // id товара
+      id: PropTypes.any, // id товара
     }),
 
     workMode: PropTypes.number.isRequired, // режим работы компонента
@@ -217,7 +217,7 @@ class AddEditGood extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    
     return (
 
       <div className="add-edit">

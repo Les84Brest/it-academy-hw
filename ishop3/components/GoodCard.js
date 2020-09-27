@@ -28,7 +28,7 @@ class GoodCard extends React.Component {
 
 
   render() {
-    console.log(this.props);
+    
 
     const { description, inStock, name, photo, totalPrice } = this.props.dataSourse;
     return (

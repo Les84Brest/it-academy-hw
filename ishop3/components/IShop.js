@@ -87,8 +87,7 @@ class IShop extends React.Component {
 
   editGood = (id) => {
     let editGood = this.state.goods.find(item => item.id == id);
-    console.log(editGood);
-    console.log(editGood);
+    
     this.setState({ editedGood: editGood, workMode: IShop.MODE_EDIT, displayDetails: null, selectId: null });
   }
 
