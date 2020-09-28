@@ -5,6 +5,7 @@ import GoodItem from './GoodItem';
 import GoodCard from './GoodCard';
 import AddEditGood from './AddEditGood';
 import Button from './Button';
+import Icon from './Icon';
 
 
 import './iShop.css';
@@ -156,7 +157,7 @@ class IShop extends React.Component {
 
     return (
       <div className="ishop__goods-list goods-list">
-       
+        <Icon name="atom" onClick={()=>{confirm('how are you')}}></Icon>
         {goodsForRender}
         {/* доступность кнопки товаров */}
         {
