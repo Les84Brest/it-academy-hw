@@ -1,17 +1,17 @@
 "use strict";
 
-import React from 'react'; 
+import React, { Fragment } from 'react'; 
 import ReactDOM from 'react-dom';
 
 import RainbowFrame  from './components/RainbowFrame';
-
-import ColorFrame from './components/ColorFrame';
-import Button from './components/Button';
+import RainbowFrameHOC  from './components/RainbowFrameHOC';
+import withRainbowFrame from './components/withRainbowFrame';
 
 
 let colors= ['red','orange', 'yellow','green', '#00BFFF', 'blue', 'purple'];
+let FragmentComponent = withRainbowFrame(colors)(Fragment);
+
 ReactDOM.render(
-  <RainbowFrame colors={colors}>Hello!</RainbowFrame>
-  // <ColorFrame color="tomato">надпись</ColorFrame>
+  <FragmentComponent>   Hello JS!  </FragmentComponent>  
   , document.querySelector('.rainbow__end')  
 );
