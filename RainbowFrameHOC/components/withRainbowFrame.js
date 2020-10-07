@@ -17,7 +17,7 @@ const  withRainbowFrame = (colors) => (Component) => {
 
     prev = <div style={{border: '4px solid ' +curColor, margin: '5px', padding: '5px'}}>{prev}</div> ;
       return prev;
-    }, <div>{props.children}</div> );
+    }, <Component {...props} />/*<div>{props.children}</div> */);
     
     return  toOut; 
   }
