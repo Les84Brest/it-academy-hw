@@ -4,19 +4,20 @@ import PropTypes from 'prop-types';
 import CurrentCompanyDisplay from './CurrentCompanyDisplay';
 
 import Button from './Button';
+
 import './MobileApp.css';
+import MobileCompany from './MobileCompany';
 
 
-class MobileApp extends React.Component {
+class MobileApp extends React.PureComponent {
  
-
-
-  constructor(props) {
+ constructor(props) {
     super(props);
     console.log(props);
   }
 
   render() {
+    console.log('MobileApp render');
     return (
       <div className="MobileApp">
         <div className="MobileApp__header sect ">
@@ -30,6 +31,9 @@ class MobileApp extends React.Component {
             <Button>Все</Button>
             <Button>Активные</Button>
             <Button>Заблокированные</Button>
+        </div>
+        <div className="MobileApp__company sect ">
+          <MobileCompany/>
         </div>
         <div className="MobileApp__add sect ">
             <Button>Добавить клиента</Button>
