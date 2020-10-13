@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Button from './Button';
+import MobileClient from './MobileClient';
 
 import './MobileCompany.css';
-import MobileClient from './MobileClient';
+
 
 
 
@@ -15,8 +14,28 @@ class MobileCompany extends React.PureComponent {
 
   }
 
+  static propTypes = {
+    clients: PropTypes.arrayOf(
+      PropTypes.shape({
+        lastName: PropTypes.string,
+        firstName: PropTypes.string,
+        secondName: PropTypes.string,
+        balanse: PropTypes.number,
+        id: PropTypes.number,
+        status: PropTypes.string,
+        }
+      )
+    )
+  }
+
+  state = {
+    clients: this.props.clients,
+  }
+
   render() {
     console.log('MobileCompany render');
+
+    let clientsList = this.state.clients.map(item => <MobileClient key={item.id} clientInfo={item}/>);
     return (
       <div className="MobileCompany">
         <table>
@@ -27,17 +46,15 @@ class MobileCompany extends React.PureComponent {
               <td>Отчество</td>
               <td>Баланс</td>
               <td>Статус</td>
-              <td>Редактировать</td> 
-              <td>Удалить</td> 
+              <td>Редактировать</td>
+              <td>Удалить</td>
 
             </tr>
           </thead>
           <tbody>
-            <MobileClient />
-            <MobileClient />
-            <MobileClient />
             
-            
+          {clientsList}
+
           </tbody>
         </table>
       </div>

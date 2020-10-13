@@ -14,15 +14,34 @@ class MobileClient extends React.PureComponent {
 
   }
 
+  static propTypes = {
+    
+    clientInfo: PropTypes.shape({
+        lastName: PropTypes.string,
+        firstName: PropTypes.string,
+        secondName: PropTypes.string,
+        balanse: PropTypes.number,
+        id: PropTypes.number,
+        status: PropTypes.string,
+        }
+      )
+    
+  }
+
+  state = {
+    clientInfo : this.props.clientInfo,
+  }
+
   render() {
     console.log('MobileClient render');
+    
     return (
       <tr className='MobileClient'>
-        <td>Иванов</td>
-        <td>Иван</td>
-        <td>Константинович</td>
-        <td>350,99</td>
-        <td className="active">active</td>
+        <td>{this.state.clientInfo.lastName}</td>
+        <td>{this.state.clientInfo.firstName}</td>
+        <td>{this.state.clientInfo.secondName}</td>
+        <td>{this.state.clientInfo.balanse}</td>
+        <td className="active">{this.state.clientInfo.status}</td>
         <td><Button>Редактировать</Button></td>
         <td><Button>Удалить</Button></td>
       </tr>

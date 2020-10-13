@@ -12,6 +12,10 @@
   font-weight: bold;
   background: #c83240;
 }
+.MobileCompany table thead tr td {
+  padding: 10px 5px;
+}
+
 
 .MobileCompany table tbody tr:nth-child(1n) {
   background: #f6f6f6;

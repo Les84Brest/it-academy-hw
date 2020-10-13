@@ -5,15 +5,38 @@ import CurrentCompanyDisplay from './CurrentCompanyDisplay';
 
 import Button from './Button';
 
-import './MobileApp.css';
+import './MobileApp.css'; 
 import MobileCompany from './MobileCompany';
 
 
 class MobileApp extends React.PureComponent {
- 
- constructor(props) {
+
+  constructor(props) {
     super(props);
-    console.log(props);
+    console.log(typeof props.companyData);
+
+    
+  }
+
+  static propTypes = {
+    companyData: PropTypes.objectOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          lastName: PropTypes.string,
+          firstName: PropTypes.string,
+          secondName: PropTypes.string,
+          balanse: PropTypes.number,
+          id: PropTypes.number,
+          status: PropTypes.string,
+        }
+        )
+      )
+    )
+  }
+
+  state = {
+    currentCompany : "MTS",
+    currentCompanyClients : this.props.companyData.MTS,
   }
 
   render() {
@@ -25,19 +48,19 @@ class MobileApp extends React.PureComponent {
             <Button>Velcom</Button>
             <Button>MTS</Button>
           </div>
-           <CurrentCompanyDisplay/> {/* показываем текущую компанию */}
+          <CurrentCompanyDisplay /> {/* показываем текущую компанию */}
         </div>
         <div className="MobileApp__sort sect ">
-            <Button>Все</Button>
-            <Button>Активные</Button>
-            <Button>Заблокированные</Button>
+          <Button>Все</Button>
+          <Button>Активные</Button>
+          <Button>Заблокированные</Button>
         </div>
         <div className="MobileApp__company sect ">
-          <MobileCompany/>
+          <MobileCompany clients={this.state.currentCompanyClients}/>
         </div>
         <div className="MobileApp__add sect ">
-            <Button>Добавить клиента</Button>
-            
+          <Button>Добавить клиента</Button>
+
         </div>
       </div>
     )
