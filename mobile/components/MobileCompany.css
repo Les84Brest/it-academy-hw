@@ -7,6 +7,9 @@
   border-spacing: 0px;
 }
 
+.MobileCompany {
+  padding: 15px 5px;
+}
 .MobileCompany table thead tr {
   color: #ffffff;
   font-weight: bold;
@@ -23,4 +26,9 @@
 
 .MobileCompany table tbody tr:nth-child(2n) {
   background: #e6e6e6;
+}
+.section{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid darkcyan;
 }

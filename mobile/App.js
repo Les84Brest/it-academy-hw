@@ -3,7 +3,7 @@
 import React, { Fragment } from 'react'; 
 import ReactDOM from 'react-dom';
 
-import MobileApp from './components/MobileApp';
+import MobileCompany from './components/MobileCompany';
 let clientsBase = require('./clients.json');
 
 
@@ -11,6 +11,6 @@ let clientsBase = require('./clients.json');
 
 
 ReactDOM.render(
- <MobileApp companyData={clientsBase}  />
+ <MobileCompany companyData={clientsBase}  />
   , document.querySelector('.Mobile-company')  
 );
