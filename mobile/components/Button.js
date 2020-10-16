@@ -1,22 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, {Children, Component} from "react";
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';

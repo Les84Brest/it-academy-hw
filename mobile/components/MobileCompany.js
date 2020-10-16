@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MobileClient from './MobileClient';
 import Button from './Button';
+import EventEmmiter from 'events';
 
 import './MobileCompany.css';
 
@@ -12,8 +13,16 @@ class MobileCompany extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    
+
+    //события
+    this.mobileEvents = new EventEmmiter();
+    this.mobileEvents.on('filterShowAll', this.handlerFilterDisplayAll);
+    this.mobileEvents.on('filterShowActive', this.handlerFilterDisplayActive);
 
   }
+
+  
 
   static propTypes = {
     companyData: PropTypes.objectOf(
@@ -34,15 +43,33 @@ class MobileCompany extends React.PureComponent {
   state = {
     currentCompany: "MTS",
     clients: this.props.companyData.MTS,
-    
+
   }
 
-  handlerChangeCompany = (companyName) => {
-    let newProps = {currentCompany: companyName,
-    clients: this.props.companyData[companyName],
+  handlerChangeCompany = (e) => {
+    e.preventDefault();
+    
+    let newProps = {
+      currentCompany: e.target.dataset.company,
+      clients: this.props.companyData[e.target.dataset.company],
+    }
+    this.setState(newProps);
   }
-  this.setState(newProps);
+  handlerFilterDisplayActive = () => {
+    let activeClients=[...this.props.companyData[this.state.currentCompany]].filter(item => {
+      if (item.status == 'active') {
+        return item;
+      }
+      this.setState({clients: activeClients});
+    });
+
   }
+  handlerFilterDisplayAll = () => {
+    let allClients = [...this.props.companyData[this.state.currentCompany]];
+    this.setState({clients: allClients});
+    console.log(allClients);
+  }
+ 
 
   render() {
     console.log('MobileCompany render');
@@ -52,17 +79,17 @@ class MobileCompany extends React.PureComponent {
       <div className="MobileCompany">
         <div className="MobileCompany__header section">
           <div className="MobileCompany__company-change section">
-            <Button onClick={this.handlerChangeCompany}>MTS</Button>
-            <Button onClick={this.handlerChangeCompany}>Velcom</Button>
+            <Button onClick={this.handlerChangeCompany} data-company="MTS">MTS</Button>
+            <Button onClick={this.handlerChangeCompany} data-company="velcom">Velcom</Button>
             <h2>{`Название компании - ${this.state.currentCompany}`}</h2>
           </div>
           <div className="MobileCompany__filter section">
-            <Button>Все</Button>
+            <Button onClick={() => {this.mobileEvents.emit('filterShowAll')}}>Все</Button>
             <Button>Активные</Button>
             <Button>Заблокированные</Button>
 
           </div>
-          
+
         </div>
         <table>
           <thead>
@@ -83,6 +110,7 @@ class MobileCompany extends React.PureComponent {
 
           </tbody>
         </table>
+        <Button>Добавить нового</Button>
       </div>
     )
   }
