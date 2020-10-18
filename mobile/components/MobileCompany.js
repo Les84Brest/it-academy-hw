@@ -13,16 +13,18 @@ class MobileCompany extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    
+
 
     //события
     this.mobileEvents = new EventEmmiter();
-    this.mobileEvents.on('filterShowAll', this.handlerFilterDisplayAll);
-    this.mobileEvents.on('filterShowActive', this.handlerFilterDisplayActive);
+    this.mobileEvents.on('filterShowAll', this.handlerFilterShowAll);
+    this.mobileEvents.on('filterShowActive', this.handlerFilterShowActive);
+    this.mobileEvents.on('filterShowBlocked', this.handlerFilterShowBlocked);
+    this.mobileEvents.on('addingNewClient', this.handlerAddNewClient);
 
   }
 
-  
+
 
   static propTypes = {
     companyData: PropTypes.objectOf(
@@ -43,33 +45,61 @@ class MobileCompany extends React.PureComponent {
   state = {
     currentCompany: "MTS",
     clients: this.props.companyData.MTS,
+    addNewClientMode: false,
+  }
 
+  handlerAddNewClient = () =>{
+    console.log("Add new client render");
+
+    this.setState({addNewClientMode : true});
   }
 
   handlerChangeCompany = (e) => {
     e.preventDefault();
-    
+
     let newProps = {
       currentCompany: e.target.dataset.company,
       clients: this.props.companyData[e.target.dataset.company],
     }
     this.setState(newProps);
   }
-  handlerFilterDisplayActive = () => {
-    let activeClients=[...this.props.companyData[this.state.currentCompany]].filter(item => {
+
+  handlerFilterShowActive = () => {
+
+    console.log(this.props.companyData[this.state.currentCompany]);
+    let activeClients = this.props.companyData[this.state.currentCompany]
+    activeClients = activeClients.filter((item) => {
       if (item.status == 'active') {
         return item;
       }
-      this.setState({clients: activeClients});
+
     });
+    this.setState({ clients: activeClients });
 
   }
-  handlerFilterDisplayAll = () => {
+
+  handlerFilterShowBlocked = () => {
+
+    console.log(this.props.companyData[this.state.currentCompany]);
+    let blockedClients = this.props.companyData[this.state.currentCompany].filter((item) => {
+      if (item.status == 'blocked') {
+        return item;
+      }
+
+    });
+
+    this.setState({ clients: blockedClients });
+
+  }
+
+  handlerFilterShowAll = () => {
     let allClients = [...this.props.companyData[this.state.currentCompany]];
-    this.setState({clients: allClients});
+    this.setState({ clients: allClients });
     console.log(allClients);
   }
- 
+
+  
+
 
   render() {
     console.log('MobileCompany render');
@@ -84,9 +114,9 @@ class MobileCompany extends React.PureComponent {
             <h2>{`Название компании - ${this.state.currentCompany}`}</h2>
           </div>
           <div className="MobileCompany__filter section">
-            <Button onClick={() => {this.mobileEvents.emit('filterShowAll')}}>Все</Button>
-            <Button>Активные</Button>
-            <Button>Заблокированные</Button>
+            <Button onClick={() => { this.mobileEvents.emit('filterShowAll') }}>Все</Button>
+            <Button onClick={() => { this.mobileEvents.emit('filterShowActive') }}  >Активные</Button>
+            <Button onClick={() => { this.mobileEvents.emit('filterShowBlocked') }}>Заблокированные</Button>
 
           </div>
 
@@ -110,7 +140,11 @@ class MobileCompany extends React.PureComponent {
 
           </tbody>
         </table>
-        <Button>Добавить нового</Button>
+        <Button onClick={() => { this.mobileEvents.emit('addingNewClient', this.handlerAddNewClient) }}>Добавить нового</Button>
+        {
+          (this.state.addNewClientMode) &&
+          <MobileClient clientInfo={null} />
+        }
       </div>
     )
   }

@@ -12,3 +12,7 @@
  tr.MobileClient td.blocked{
    background-color: tomato;
  }
+/* добавление нового клиента */
+ .MobileClient-new{
+   color: tomato;
+ }
