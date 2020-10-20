@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import Button from './Button';
 
+import mobileEvents from './mobileEvents';
+
 import './MobileClient.css';
 
 
@@ -24,7 +26,6 @@ class MobileClient extends React.PureComponent {
       // build new client hash for state
 
       this.state.clientInfo = {
-
         lastName: '',
         firstName: '',
         secondName: '',
@@ -36,18 +37,31 @@ class MobileClient extends React.PureComponent {
 
     //refs
 
-    this.firstName = React.createRef();
-    this.lastName = React.createRef();
-    this.secondName = React.createRef();
-    this.balanse = React.createRef();
-    this.status = React.createRef();
+    this.firstName = null;
+    this.lastName = null;
+    this.secondName = null;
+    this.balanse = null;
+    this.status = null;
 
   }
 
-  componentDidMount() {
-    console.log("Подписываемся на событие");
+  // ref callbacks
 
+  setLastNameRef = (ref) => {
+    this.lastNameRef = ref;
   }
+  setSecondNameRef = (ref) => {
+    this.secondNameRef = ref;
+  }
+  setFirstNameRef = (ref) => {
+    this.FirstNameRef = ref;
+  }
+  setBalanseRef = (ref) => {
+    this.BalansRef = ref;
+  }
+
+ 
+
   componentWillUnmount() {
     console.log('Отписываемся от события');
   }
@@ -65,14 +79,64 @@ class MobileClient extends React.PureComponent {
     )
 
   }
-
+  
   state = {
     clientInfo: this.props.clientInfo,
     workMode: MobileClient.WORKMODE_SHOW,
   }
+  
+ 
+
+  handlerSaveClient = () => {
+    //обновляем клиента
+    console.log(
+    
+      "маруся"
+    );
+    console.dir(this.firstNameRef.value);
+    let client =  {
+      lastName: this.secondNameRef.value,
+      firstName: this.firstNameRef.value,
+      secondName: this.secondNameRef.value,
+      balanse: this.BalansRef.value,
+      id: this.state.clientInfo.id,
+      status: 'xxx',
+    };
+    
+
+    console.log('client redacterd');
+    console.log(client);
+    // if(clientStatus.balanse <=0 ){
+    //   client.status = 'blocked';
+    // }else{
+    //   client.status = 'active';
+    // }
+
+    mobileEvents.emit('savingClient', client);
+    
+    
+  }
+
+  handlerEditClient = () => {
+    this.setState({workMode: MobileClient.WORKMODE_EDIT});
+  }
+  handlerEditCancel = () => {
+    this.setState({workMode: MobileClient.WORKMODE_SHOW});
+  }
+
+  setTextInput = (element) => {
+    this.newTextRef = ref;
+  }
+  setNewText = () => {
+    if(this.newTextRef){
+      let newText = this.newTextRef.value;
+      this.setState()
+    }
+  }
 
   render() {
     console.log('MobileClient render');
+
 
     return (
       <Fragment>
@@ -80,12 +144,12 @@ class MobileClient extends React.PureComponent {
 
           (this.state.workMode == MobileClient.WORKMODE_SHOW) &&
           <tr className='MobileClient'>
-            <td ref={this.lastName}>{this.state.clientInfo.lastName}</td>
-            <td ref={this.firstName}>{this.state.clientInfo.firstName}</td>
-            <td ref={this.secondName}>{this.state.clientInfo.secondName}</td>
-            <td ref={this.balanse}>{this.state.clientInfo.balanse}</td>
-            <td ref={this.status} className={classNames({ active: this.state.clientInfo.balanse > 0, blocked: this.state.clientInfo.balanse <= 0 })} >{this.state.clientInfo.status}</td>
-            <td><Button onClick={() => { mobileEvents.emmit }}>Редактировать</Button></td>
+            <td >{this.state.clientInfo.lastName}</td>
+            <td >{this.state.clientInfo.firstName}</td>
+            <td >{this.state.clientInfo.secondName}</td>
+            <td >{this.state.clientInfo.balanse}</td>
+            <td className={classNames({ active: this.state.clientInfo.balanse > 0, blocked: this.state.clientInfo.balanse <= 0 })} >{this.state.clientInfo.status}</td>
+            <td><Button onClick={this.handlerEditClient}>Редактировать</Button></td>
             <td><Button>Удалить</Button></td>
           </tr>
 
@@ -93,10 +157,14 @@ class MobileClient extends React.PureComponent {
         {
           (this.state.workMode == MobileClient.WORKMODE_EDIT) &&
           <tr className='MobileClient'>
-            <td><input type="text" value={this.state.clientInfo.lastName} /></td>
-
-            <td><Button>Сохранить</Button></td>
-            <td><Button>Отмена</Button></td>
+            <td><input type="text" ref={this.setLastNameRef} defaultValue={this.state.clientInfo.lastName}/></td>
+             <td><input type="text" ref={this.setFirstNameRef} defaultValue={this.state.clientInfo.firstName}/></td>
+             
+            <td><input type="text" ref={this.setSecondNameRef} defaultValue={this.state.clientInfo.secondName}/></td>
+            <td><input type="number" ref={this.setBalansеRef} defaultValue={parseFloat(this.state.clientInfo.balanse)}/></td> 
+            <td> </td>
+            <td><Button onClick={this.handlerEditCancel}>Отмена</Button></td>
+            <td><Button onClick={ this.handlerSaveClient}>Сохранить</Button></td>
           </tr>
         }
         {
