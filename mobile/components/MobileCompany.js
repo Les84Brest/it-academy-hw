@@ -14,14 +14,15 @@ class MobileCompany extends React.PureComponent {
   constructor(props) {
     super(props);
 
-
     //события
-    
+
     mobileEvents.on('filterShowAll', this.handlerFilterShowAll);
     mobileEvents.on('filterShowActive', this.handlerFilterShowActive);
     mobileEvents.on('filterShowBlocked', this.handlerFilterShowBlocked);
     mobileEvents.on('addingNewClient', this.handlerAddNewClient);
     mobileEvents.on('savingClient', this.handlerSaveClient);
+    mobileEvents.on('deletingClient', this.handlerDeleteClient);
+    mobileEvents.on('addNewClientCancel', this.handlerAddNewClientCancel);
 
   }
 
@@ -31,6 +32,8 @@ class MobileCompany extends React.PureComponent {
     mobileEvents.off('filterShowBlocked', this.handlerFilterShowBlocked);
     mobileEvents.off('addingNewClient', this.handlerAddNewClient);
     mobileEvents.off('savingClient', this.handlerSaveClient);
+    mobileEvents.off('deletingClient', this.handlerDeleteClient);
+    mobileEvents.off('addNewClientCancel', this.handlerAddNewClientCancel);
   }
 
   static propTypes = {
@@ -55,17 +58,38 @@ class MobileCompany extends React.PureComponent {
     addNewClientMode: false,
   }
 
+  handlerAddNewClientCancel = () => { this.setState({ addNewClientMode: false }) };
+
+  handlerDeleteClient = (id) => {
+    let items = [... this.state.clients];
+    let deleteIndex = items.findIndex((item) => item.id == id);
+    items.splice(deleteIndex, 1);
+    this.setState({ clients: items });
+
+  }
   handlerSaveClient = (client) => {
-    let clientItems = this.state.clients.slice();
-    console.log('Клиенты до сохранения');
-    console.log(clientItems);
+    console.log(client);
+    let clientItems = [...this.state.clients]
+
     let clientId = clientItems.findIndex(item => item.id == client.id);
-    clientItems.splice(clientId, 1 , client);
-    this.setState({clients: clientItems});
+
+    if (clientId == -1) {
+      // не нашли индекс - добавляем в конец и рендерим
+      clientItems = [... clientItems, client];
+      this.setState({ clients: clientItems, addNewClientMode: false, });
+
+    } else {
+
+      clientItems.splice(clientId, 1, client);
+
+      this.setState({ clients: clientItems });
+    }
+   
+
   }
 
   handlerAddNewClient = () => {
-    console.log("Add new client render");
+
 
     this.setState({ addNewClientMode: true });
   }
@@ -82,8 +106,8 @@ class MobileCompany extends React.PureComponent {
 
   handlerFilterShowActive = () => {
 
-    console.log(this.props.companyData[this.state.currentCompany]);
-    let activeClients = this.props.companyData[this.state.currentCompany]
+
+    let activeClients = this.state.clients;
     activeClients = activeClients.filter((item) => {
       if (item.status == 'active') {
         return item;
@@ -96,15 +120,14 @@ class MobileCompany extends React.PureComponent {
 
   handlerFilterShowBlocked = () => {
 
-    console.log(this.props.companyData[this.state.currentCompany]);
-    let blockedClients = this.props.companyData[this.state.currentCompany].filter((item) => {
+    let activeClients = this.state.clients;
+    activeClients = activeClients.filter((item) => {
       if (item.status == 'blocked') {
         return item;
       }
 
     });
-
-    this.setState({ clients: blockedClients });
+    this.setState({ clients: activeClients });
 
   }
 
