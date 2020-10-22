@@ -18,7 +18,7 @@ class MobileClient extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    // управкляем режимом компонента
+    // управляем режимом компонента
 
 
     if (props.clientInfo == null) {
@@ -114,7 +114,7 @@ class MobileClient extends React.PureComponent {
     let client = { ...this.state.clientInfo };
    console.log(this.balanseNewRef.value); 
 
-    client.lastName = this.secondNameNewRef.value;
+    client.lastName = this.lastNameNewRef.value;
     client.firstName = this.firstNameNewRef.value;
     client.secondName = this.secondNameNewRef.value;
     client.balanse = parseFloat(this.balanseNewRef.value);
@@ -131,11 +131,11 @@ class MobileClient extends React.PureComponent {
   }
 
   handlerSaveClient = () => {
-    //обновляем клиента
+    //копия клиента из state
     let client = { ...this.state.clientInfo };
 
 
-    client.lastName = this.secondNameRef.value;
+    client.lastName = this.lastNameRef.value;
     client.firstName = this.firstNameRef.value;
     client.secondName = this.secondNameRef.value;
     client.balanse = parseFloat(this.balanseRef.value);

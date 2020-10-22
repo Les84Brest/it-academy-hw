@@ -11,6 +11,10 @@ import './MobileCompany.css';
 
 class MobileCompany extends React.PureComponent {
 
+  static FILTER_ALL = 1;
+  static FILTER_ACTIVE = 2;
+  static FILTER_BLOCKED = 3;
+
   constructor(props) {
     super(props);
 
@@ -54,9 +58,11 @@ class MobileCompany extends React.PureComponent {
 
   state = {
     currentCompany: "MTS",
-    clients: this.props.companyData.MTS,
+    clients: this.props.companyData.MTS, // набор клиентов для текущей работы
+    clientsBackup: this.props.companyData.MTS, // сохранение исходного набора клиентов
     addNewClientMode: false,
-  }
+    filterType: MobileCompany.FILTER_ALL, 
+  } 
 
   handlerAddNewClientCancel = () => { this.setState({ addNewClientMode: false }) };
 
@@ -68,15 +74,15 @@ class MobileCompany extends React.PureComponent {
 
   }
   handlerSaveClient = (client) => {
-    console.log(client);
-    let clientItems = [...this.state.clients]
+    
+    let clientItems = [...this.state.clientsBackup];
 
     let clientId = clientItems.findIndex(item => item.id == client.id);
 
     if (clientId == -1) {
       // не нашли индекс - добавляем в конец и рендерим
       clientItems = [... clientItems, client];
-      this.setState({ clients: clientItems, addNewClientMode: false, });
+      this.setState({ clients: clientItems, clientsBackup: clientItems ,addNewClientMode: false, });
 
     } else {
 
@@ -97,48 +103,61 @@ class MobileCompany extends React.PureComponent {
   handlerChangeCompany = (e) => {
     e.preventDefault();
 
+    // отрабатываем фильтр
+    let filterCallBack = null;
+    switch(this.state.filterType){
+      case MobileCompany.FILTER_ACTIVE:
+        filterCallBack = this.handlerFilterShowActive;
+      case MobileCompany.FILTER_BLOCKED:
+        filterCallBack = this.handlerFilterShowBlocked;
+        break;
+
+    }
+
     let newProps = {
       currentCompany: e.target.dataset.company,
+      clientsBackup: this.props.companyData[e.target.dataset.company],
       clients: this.props.companyData[e.target.dataset.company],
     }
-    this.setState(newProps);
+    //отрабатываем включенные фильтры
+    
+    this.setState(newProps, filterCallBack);
   }
 
   handlerFilterShowActive = () => {
 
 
-    let activeClients = this.state.clients;
+    let activeClients = this.state.clientsBackup;
     activeClients = activeClients.filter((item) => {
       if (item.status == 'active') {
         return item;
       }
 
     });
-    this.setState({ clients: activeClients });
+
+    this.setState({ clients: activeClients, filterType: MobileCompany.FILTER_ACTIVE,});
 
   }
 
   handlerFilterShowBlocked = () => {
 
-    let activeClients = this.state.clients;
-    activeClients = activeClients.filter((item) => {
+    let blockedClients = this.state.clientsBackup;
+    blockedClients = blockedClients.filter((item) => {
       if (item.status == 'blocked') {
         return item;
       }
 
     });
-    this.setState({ clients: activeClients });
+    
+    this.setState({ clients: blockedClients, filterType: MobileCompany.FILTER_BLOCKED });
 
   }
 
   handlerFilterShowAll = () => {
-    let allClients = [...this.props.companyData[this.state.currentCompany]];
-    this.setState({ clients: allClients });
-    console.log(allClients);
+    let allClients = [...this.state.clientsBackup];
+    this.setState({ clients: allClients, filterType: MobileCompany.FILTER_ALL });
+    
   }
-
-
-
 
   render() {
     console.log('MobileCompany render');
