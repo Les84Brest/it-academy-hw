@@ -18,6 +18,18 @@ class MobileCompany extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    //state
+    let clients = this.props.companyData.filter((val) => {
+      return val.company == "MTS";
+    });
+    state = {
+      currentCompany: "MTS",
+      clients, // набор клиентов для текущей работы
+      clientsBackup: clients,// сохранение исходного набора клиентов
+      addNewClientMode: false,
+      filterType: MobileCompany.FILTER_ALL,
+    };
+
     //события
 
     mobileEvents.on('filterShowAll', this.handlerFilterShowAll);
@@ -41,7 +53,7 @@ class MobileCompany extends React.PureComponent {
   }
 
   static propTypes = {
-    companyData: PropTypes.objectOf(
+    companyData:
       PropTypes.arrayOf(
         PropTypes.shape({
           lastName: PropTypes.string,
@@ -50,39 +62,32 @@ class MobileCompany extends React.PureComponent {
           balanse: PropTypes.number,
           id: PropTypes.number,
           status: PropTypes.string,
+          company: PropTypes.string,
         }
         )
       )
-    )
+
   }
 
-  state = {
-    currentCompany: "MTS",
-    clients: this.props.companyData.MTS, // набор клиентов для текущей работы
-    clientsBackup: this.props.companyData.MTS, // сохранение исходного набора клиентов
-    addNewClientMode: false,
-    filterType: MobileCompany.FILTER_ALL, 
-  } 
 
   handlerAddNewClientCancel = () => { this.setState({ addNewClientMode: false }) };
 
   handlerDeleteClient = (id) => {
-    let items = [... this.state.clients];
+    let items = [... this.state.clientsBackup];
     let deleteIndex = items.findIndex((item) => item.id == id);
     items.splice(deleteIndex, 1);
-    this.setState({ clients: items });
+    this.setState({ clients: items, clientsBackup: items.slice() });
 
   }
   handlerSaveClient = (client) => {
-    
-    let clientItems = [...this.state.clientsBackup];
 
+    let clientItems = [...this.state.clientsBackup];
     let clientId = clientItems.findIndex(item => item.id == client.id);
 
     if (clientId == -1) {
       // не нашли индекс - добавляем в конец и рендерим
-      clientItems = [... clientItems, client];
-      this.setState({ clients: clientItems, clientsBackup: clientItems ,addNewClientMode: false, });
+      clientItems = [...clientItems, client];
+      this.setState({ clients: clientItems, clientsBackup: clientItems, addNewClientMode: false, });
 
     } else {
 
@@ -90,7 +95,7 @@ class MobileCompany extends React.PureComponent {
 
       this.setState({ clients: clientItems });
     }
-   
+
 
   }
 
@@ -105,7 +110,7 @@ class MobileCompany extends React.PureComponent {
 
     // отрабатываем фильтр
     let filterCallBack = null;
-    switch(this.state.filterType){
+    switch (this.state.filterType) {
       case MobileCompany.FILTER_ACTIVE:
         filterCallBack = this.handlerFilterShowActive;
       case MobileCompany.FILTER_BLOCKED:
@@ -120,7 +125,7 @@ class MobileCompany extends React.PureComponent {
       clients: this.props.companyData[e.target.dataset.company],
     }
     //отрабатываем включенные фильтры
-    
+
     this.setState(newProps, filterCallBack);
   }
 
@@ -135,7 +140,7 @@ class MobileCompany extends React.PureComponent {
 
     });
 
-    this.setState({ clients: activeClients, filterType: MobileCompany.FILTER_ACTIVE,});
+    this.setState({ clients: activeClients, filterType: MobileCompany.FILTER_ACTIVE, });
 
   }
 
@@ -148,7 +153,7 @@ class MobileCompany extends React.PureComponent {
       }
 
     });
-    
+
     this.setState({ clients: blockedClients, filterType: MobileCompany.FILTER_BLOCKED });
 
   }
@@ -156,7 +161,7 @@ class MobileCompany extends React.PureComponent {
   handlerFilterShowAll = () => {
     let allClients = [...this.state.clientsBackup];
     this.setState({ clients: allClients, filterType: MobileCompany.FILTER_ALL });
-    
+
   }
 
   render() {
@@ -201,7 +206,7 @@ class MobileCompany extends React.PureComponent {
         <Button onClick={() => { mobileEvents.emit('addingNewClient', this.handlerAddNewClient) }}>Добавить нового</Button>
         {
           (this.state.addNewClientMode) &&
-          <MobileClient clientInfo={null} />
+          <MobileClient clientInfo={null} currentCompany={this.state.currentCompany} />
         }
       </div>
     )

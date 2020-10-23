@@ -32,6 +32,7 @@ class MobileClient extends React.PureComponent {
         balanse: '',
         id: Math.floor(Math.random() * 100000),
         status: '',
+        company: props.currentCompany,
       };
     }
 
@@ -93,8 +94,11 @@ class MobileClient extends React.PureComponent {
       balanse: PropTypes.number,
       id: PropTypes.number,
       status: PropTypes.string,
+      company: PropTypes.string,
     }
-    )
+    
+    ),
+    currentCompany: PropTypes.string,
 
   }
 
@@ -112,8 +116,7 @@ class MobileClient extends React.PureComponent {
   handlerSaveNewClient = () => {
 
     let client = { ...this.state.clientInfo };
-   console.log(this.balanseNewRef.value); 
-
+    
     client.lastName = this.lastNameNewRef.value;
     client.firstName = this.firstNameNewRef.value;
     client.secondName = this.secondNameNewRef.value;
@@ -163,6 +166,9 @@ class MobileClient extends React.PureComponent {
     this.newTextRef = ref;
   }
 
+  getCurrentCompany =  () => {
+    return this.state.cu
+  } 
 
   render() {
     console.log('MobileClient render. ID - ' + this.state.clientInfo.id);
