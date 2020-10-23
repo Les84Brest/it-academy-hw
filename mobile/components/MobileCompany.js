@@ -10,7 +10,7 @@ import './MobileCompany.css';
 
 
 class MobileCompany extends React.PureComponent {
-
+//состояния фильтров
   static FILTER_ALL = 1;
   static FILTER_ACTIVE = 2;
   static FILTER_BLOCKED = 3;
@@ -22,10 +22,11 @@ class MobileCompany extends React.PureComponent {
     let clients = this.props.companyData.filter((val) => {
       return val.company == "MTS";
     });
-    state = {
+
+    this.state = {
       currentCompany: "MTS",
-      clients, // набор клиентов для текущей работы
-      clientsBackup: clients,// сохранение исходного набора клиентов
+      clients: clients, // набор клиентов для текущей работы
+      clientsBackup: [...clients],// сохранение исходного набора клиентов
       addNewClientMode: false,
       filterType: MobileCompany.FILTER_ALL,
     };
@@ -69,9 +70,9 @@ class MobileCompany extends React.PureComponent {
 
   }
 
-
+// отмена добавления новго клиента
   handlerAddNewClientCancel = () => { this.setState({ addNewClientMode: false }) };
-
+// удаляем клиента
   handlerDeleteClient = (id) => {
     let items = [... this.state.clientsBackup];
     let deleteIndex = items.findIndex((item) => item.id == id);
@@ -79,6 +80,7 @@ class MobileCompany extends React.PureComponent {
     this.setState({ clients: items, clientsBackup: items.slice() });
 
   }
+  /** Сохраняем клиента  */
   handlerSaveClient = (client) => {
 
     let clientItems = [...this.state.clientsBackup];
@@ -86,51 +88,55 @@ class MobileCompany extends React.PureComponent {
 
     if (clientId == -1) {
       // не нашли индекс - добавляем в конец и рендерим
-      clientItems = [...clientItems, client];
-      this.setState({ clients: clientItems, clientsBackup: clientItems, addNewClientMode: false, });
+      clientItems.push(client);
+      this.setState({ clients: clientItems, clientsBackup: [...clientItems], addNewClientMode: false, });
 
     } else {
 
       clientItems.splice(clientId, 1, client);
-
-      this.setState({ clients: clientItems });
+      this.setState({ clients: clientItems, clientsBackup: [...clientItems] });
     }
-
-
   }
-
+/** Нажатие кнопки добавить нового клиента */
   handlerAddNewClient = () => {
-
-
     this.setState({ addNewClientMode: true });
   }
-
+/** Меняем компанию */
   handlerChangeCompany = (e) => {
     e.preventDefault();
 
-    // отрабатываем фильтр
+   /* В зависимости от текущего включенного фильтра 
+   устанавливаем его на изменившийся набор клиентов */
     let filterCallBack = null;
     switch (this.state.filterType) {
       case MobileCompany.FILTER_ACTIVE:
         filterCallBack = this.handlerFilterShowActive;
+        break;
       case MobileCompany.FILTER_BLOCKED:
         filterCallBack = this.handlerFilterShowBlocked;
+        break;
+      case MobileCompany.FILTER_ALL:
+        filterCallBack = this.handlerFilterShowAll;
         break;
 
     }
 
+    let newClients = this.props.companyData.filter((val) => {
+      return val.company == e.target.dataset.company;
+    });
+
     let newProps = {
       currentCompany: e.target.dataset.company,
-      clientsBackup: this.props.companyData[e.target.dataset.company],
-      clients: this.props.companyData[e.target.dataset.company],
+      clients: newClients,
+      clientsBackup: [...newClients],
     }
-    //отрабатываем включенные фильтры
+
+   /** меняем стейт включаем фильтры */
 
     this.setState(newProps, filterCallBack);
   }
-
+// установка фильтра по клиентам
   handlerFilterShowActive = () => {
-
 
     let activeClients = this.state.clientsBackup;
     activeClients = activeClients.filter((item) => {
@@ -159,8 +165,8 @@ class MobileCompany extends React.PureComponent {
   }
 
   handlerFilterShowAll = () => {
-    let allClients = [...this.state.clientsBackup];
-    this.setState({ clients: allClients, filterType: MobileCompany.FILTER_ALL });
+    
+    this.setState({ clients: [...this.state.clientsBackup], filterType: MobileCompany.FILTER_ALL });
 
   }
 
