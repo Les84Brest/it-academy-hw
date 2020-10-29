@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileClient удаление клиента 1`] = `
+<tr
+  className="MobileClient"
+>
+  <td>
+    Безустанный
+  </td>
+  <td>
+    Константин
+  </td>
+  <td>
+    Константинович
+  </td>
+  <td>
+    -8.5
+  </td>
+  <td
+    className="blocked"
+  >
+    blocked
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Редактировать
+    </button>
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Удалить
+    </button>
+  </td>
+</tr>
+`;
+
+exports[`MobileClient удаление клиента 2`] = `
+<tr
+  className="MobileClient"
+>
+  <td>
+    Безустанный
+  </td>
+  <td>
+    Константин
+  </td>
+  <td>
+    Константинович
+  </td>
+  <td>
+    -8.5
+  </td>
+  <td
+    className="blocked"
+  >
+    blocked
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Редактировать
+    </button>
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Удалить
+    </button>
+  </td>
+</tr>
+`;

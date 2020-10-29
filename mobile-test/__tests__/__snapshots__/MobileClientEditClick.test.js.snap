@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileClient в режим редактирования по кнопке 1`] = `
+<tr
+  className="MobileClient"
+>
+  <td>
+    Безустанный
+  </td>
+  <td>
+    Константин
+  </td>
+  <td>
+    Константинович
+  </td>
+  <td>
+    -8.5
+  </td>
+  <td
+    className="blocked"
+  >
+    blocked
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Редактировать
+    </button>
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Удалить
+    </button>
+  </td>
+</tr>
+`;
+
+exports[`MobileClient в режим редактирования по кнопке 2`] = `
+<tr
+  className="MobileClient"
+>
+  <td>
+    <input
+      defaultValue="Безустанный"
+      type="text"
+    />
+  </td>
+  <td>
+    <input
+      defaultValue="Константин"
+      type="text"
+    />
+  </td>
+  <td>
+    <input
+      defaultValue="Константинович"
+      type="text"
+    />
+  </td>
+  <td>
+    <input
+      defaultValue={-8.5}
+      type="number"
+    />
+  </td>
+  <td>
+     
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Отмена
+    </button>
+  </td>
+  <td>
+    <button
+      className="btn"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Сохранить
+    </button>
+  </td>
+</tr>
+`;
