@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileCompany удаление клиента 1`] = `
+exports[`MobileCompany фильтр: показать активных 1`] = `
 <div
   className="MobileClient-new"
 >
@@ -58,60 +58,113 @@ exports[`MobileCompany удаление клиента 1`] = `
 </div>
 `;
 
-exports[`MobileCompany удаление клиента 2`] = `
+exports[`MobileCompany фильтр: показать активных 2`] = `
 <div
-  className="MobileClient-new"
+  className="MobileCompany"
 >
-  <label
-    className="MobileClient-new__input"
+  <div
+    className="MobileCompany__header section"
   >
-    Фамилия
-    <input
-      defaultValue=""
-      type="text"
-    />
-  </label>
-  <label
-    className="MobileClient-new__input"
-  >
-    Имя
-    <input
-      defaultValue=""
-      type="text"
-    />
-  </label>
-  <label
-    className="MobileClient-new__input"
-  >
-    Отчество
-    <input
-      defaultValue=""
-      type="text"
-    />
-  </label>
-  <label
-    className="MobileClient-new__input"
-  >
-    Баланс
-    <input
-      defaultValue=""
-      type="number"
-    />
-  </label>
-  <br />
+    <div
+      className="MobileCompany__filter section"
+    >
+      <button
+        className="btn"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Все
+      </button>
+      <button
+        className="btn"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Активные
+      </button>
+      <button
+        className="btn"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Заблокированные
+      </button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          Фамилия
+        </td>
+        <td>
+          Имя
+        </td>
+        <td>
+          Отчество
+        </td>
+        <td>
+          Баланс
+        </td>
+        <td>
+          Статус
+        </td>
+        <td>
+          Редактировать
+        </td>
+        <td>
+          Удалить
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="MobileClient"
+      >
+        <td>
+          Маховицкий
+        </td>
+        <td>
+          Эрнест
+        </td>
+        <td>
+          Афанасиевич
+        </td>
+        <td>
+          10.55
+        </td>
+        <td
+          className="active"
+        >
+          active
+        </td>
+        <td>
+          <button
+            className="btn"
+            disabled={false}
+            onClick={[Function]}
+          >
+            Редактировать
+          </button>
+        </td>
+        <td>
+          <button
+            className="btn"
+            disabled={false}
+            onClick={[Function]}
+          >
+            Удалить
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <button
     className="btn"
     disabled={false}
     onClick={[Function]}
   >
-    Сохранить
-  </button>
-  <button
-    className="btn"
-    disabled={false}
-    onClick={[Function]}
-  >
-    Отмена
+    Добавить нового
   </button>
 </div>
 `;

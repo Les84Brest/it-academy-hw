@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileCompany добавление нового клиента 1`] = `
+exports[`MobileCompany фильтр: показать всех 1`] = `
 <div
   className="MobileCompany"
 >
@@ -150,7 +150,7 @@ exports[`MobileCompany добавление нового клиента 1`] = `
 </div>
 `;
 
-exports[`MobileCompany добавление нового клиента 2`] = `
+exports[`MobileCompany фильтр: показать всех 2`] = `
 <div
   className="MobileCompany"
 >
@@ -224,84 +224,6 @@ exports[`MobileCompany добавление нового клиента 2`] = `
         </td>
         <td>
           10.55
-        </td>
-        <td
-          className="active"
-        >
-          active
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Редактировать
-          </button>
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Удалить
-          </button>
-        </td>
-      </tr>
-      <tr
-        className="MobileClient"
-      >
-        <td>
-          Набойщикова
-        </td>
-        <td>
-          Лиана
-        </td>
-        <td>
-          Агафоновна
-        </td>
-        <td>
-          -3.5
-        </td>
-        <td
-          className="blocked"
-        >
-          blocked
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Редактировать
-          </button>
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Удалить
-          </button>
-        </td>
-      </tr>
-      <tr
-        className="MobileClient"
-      >
-        <td>
-          Ветошников
-        </td>
-        <td>
-          Тимур
-        </td>
-        <td>
-          Андреевич
-        </td>
-        <td>
-          1
         </td>
         <td
           className="active"

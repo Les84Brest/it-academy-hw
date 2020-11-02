@@ -30,11 +30,12 @@ test('MobileCompany фильтр: показать активных', () => {
   },]
   // создаем экземпляр компонента для теста
   const component = renderer.create(
-    <MobileClient clients={data} />
+    <MobileCompany companyData={data} />
   );
 
   let componentTree = component.toJSON();
   expect(componentTree).toMatchSnapshot();
+  
   let btn = component.root.find(el => {
     return el.props.children == "Активные";
   });

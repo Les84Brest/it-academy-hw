@@ -30,7 +30,7 @@ test('MobileCompany удаление клиента', () => {
   },]
   // создаем экземпляр компонента для теста
   const component = renderer.create(
-    <MobileClient clients={data} />
+    <MobileCompany companyData={data} />
   );
 
   let componentTree =  component.toJSON();

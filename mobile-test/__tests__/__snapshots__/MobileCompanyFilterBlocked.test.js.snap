@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileCompany добавление нового клиента 1`] = `
+exports[`MobileCompany фильтр: показать заблокированных 1`] = `
 <div
   className="MobileCompany"
 >
@@ -150,7 +150,7 @@ exports[`MobileCompany добавление нового клиента 1`] = `
 </div>
 `;
 
-exports[`MobileCompany добавление нового клиента 2`] = `
+exports[`MobileCompany фильтр: показать заблокированных 2`] = `
 <div
   className="MobileCompany"
 >
@@ -214,45 +214,6 @@ exports[`MobileCompany добавление нового клиента 2`] = `
         className="MobileClient"
       >
         <td>
-          Маховицкий
-        </td>
-        <td>
-          Эрнест
-        </td>
-        <td>
-          Афанасиевич
-        </td>
-        <td>
-          10.55
-        </td>
-        <td
-          className="active"
-        >
-          active
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Редактировать
-          </button>
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Удалить
-          </button>
-        </td>
-      </tr>
-      <tr
-        className="MobileClient"
-      >
-        <td>
           Набойщикова
         </td>
         <td>
@@ -268,45 +229,6 @@ exports[`MobileCompany добавление нового клиента 2`] = `
           className="blocked"
         >
           blocked
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Редактировать
-          </button>
-        </td>
-        <td>
-          <button
-            className="btn"
-            disabled={false}
-            onClick={[Function]}
-          >
-            Удалить
-          </button>
-        </td>
-      </tr>
-      <tr
-        className="MobileClient"
-      >
-        <td>
-          Ветошников
-        </td>
-        <td>
-          Тимур
-        </td>
-        <td>
-          Андреевич
-        </td>
-        <td>
-          1
-        </td>
-        <td
-          className="active"
-        >
-          active
         </td>
         <td>
           <button

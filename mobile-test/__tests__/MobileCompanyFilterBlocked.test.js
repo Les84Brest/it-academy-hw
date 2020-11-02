@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import MobileClient from '../components/MobileClient';
 import mobileEvents from '../components/mobileEvents';
 
-test('MobileCompany фильтр: показать всех', () => {
+test('MobileCompany фильтр: показать заблокированных', () => {
   // исходные данные для рендера компонента
   const data = [{
     "company": "MTS",
@@ -35,16 +35,16 @@ test('MobileCompany фильтр: показать всех', () => {
 
   let componentTree = component.toJSON();
   expect(componentTree).toMatchSnapshot();
-
-  let btnActive = component.root.find(el => {
-    return el.props.children == "Все";
+  
+  let btn = component.root.find(el => {
+    return el.props.children == "Заблокированные";
   });
   
-  btnActive.props.onClick(); 
+  btn.props.onClick();
 
   componentTree = component.toJSON();
   expect(componentTree).toMatchSnapshot();
 
-  
+
 
 });

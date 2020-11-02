@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import MobileClient from '../components/MobileClient';
 import mobileEvents from '../components/mobileEvents';
 
-test('MobileCompany удаление клиента', () => {
+test('MobileCompany добавление нового клиента', () => {
   // исходные данные для рендера компонента
   const data = [{
     "company": "MTS",
@@ -40,7 +40,7 @@ test('MobileCompany удаление клиента', () => {
   }
   // создаем экземпляр компонента для теста
   const component = renderer.create(
-    <MobileClient clients={data} />
+    <MobileCompany companyData={data} />
   );
 
   let componentTree =  component.toJSON();
