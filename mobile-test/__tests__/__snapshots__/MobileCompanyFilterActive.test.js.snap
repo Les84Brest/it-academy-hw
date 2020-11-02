@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileCompany удаление клиента 1`] = `
+<div
+  className="MobileClient-new"
+>
+  <label
+    className="MobileClient-new__input"
+  >
+    Фамилия
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Имя
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Отчество
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Баланс
+    <input
+      defaultValue=""
+      type="number"
+    />
+  </label>
+  <br />
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Сохранить
+  </button>
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Отмена
+  </button>
+</div>
+`;
+
+exports[`MobileCompany удаление клиента 2`] = `
+<div
+  className="MobileClient-new"
+>
+  <label
+    className="MobileClient-new__input"
+  >
+    Фамилия
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Имя
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Отчество
+    <input
+      defaultValue=""
+      type="text"
+    />
+  </label>
+  <label
+    className="MobileClient-new__input"
+  >
+    Баланс
+    <input
+      defaultValue=""
+      type="number"
+    />
+  </label>
+  <br />
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Сохранить
+  </button>
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Отмена
+  </button>
+</div>
+`;
