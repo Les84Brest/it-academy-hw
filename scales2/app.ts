@@ -3,27 +3,27 @@
 /**класс весы */
 class Scales {
 
-    productList:Product[] = [];
+    productList:IScalable[] = [];
   
   
     //добавляет продукт на весы
   
-    add(product:Product):void{
+    add(product:IScalable):void{
       this.productList.push(product);
     }
   
     // возвращает вес продуктов в кг
     getSumScale():number{
       let weight: number = 0;
-      this.productList.forEach((item:Product):void => {
-        weight += item.weight;
+      this.productList.forEach((item:IScalable):void => {
+        weight += item.getScale();
       });
       return weight;
     }
     // список продуктов на весах
     getNameList():Array<string>{
       let productsNames: Array<string> = [];
-      this.productList.forEach((item:Product):void => {
+      this.productList.forEach((item:IScalable):void => {
         productsNames.push(item.getName());
   
       });
@@ -33,8 +33,13 @@ class Scales {
 
 
   /**Product classes */
+  interface IScalable{
+    getScale(): number;
+    getName(): string;
+  }
 
-class Product {
+
+abstract class Product {
     weight  = 0;
     name = '';
    
@@ -48,25 +53,34 @@ class Product {
   }
 
   /* класс продукта Apple */
-  class Apple extends Product{
+  class Apple implements IScalable{
+
     weight  = 0.43;
     name = 'Apple';
-  
-    constructor(){
-      super();
+    
+    getScale(): number {
+      return this.weight;
     }
+    getName(): string {
+      return this.name;
+    }  
   
   }
 /* класс продукта Tomato */
  
-class Tomato extends Product{
+class Tomato implements IScalable{
+
+  
+  getScale(): number {
+    return this.weight;
+  }
+  getName(): string {
+    return this.name;
+  }
+
     weight  = 0.32;
     name = 'Tomato';
   
-    
-    constructor(){
-      super();
-    }
   
   }
 
