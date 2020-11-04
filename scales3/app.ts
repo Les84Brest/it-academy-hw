@@ -150,7 +150,7 @@ class Product {
     return hash;
   }
 
-  static fromJSON(productHash: Object):Product{
+  static fromJSON(productHash: {name:string, weight: number} ):Product{
     return new Product(productHash.name, productHash.weight);
   }
 }
