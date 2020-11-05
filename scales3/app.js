@@ -16,7 +16,41 @@ var ScalesStorageEngineArray = /** @class */ (function () {
     };
     return ScalesStorageEngineArray;
 }());
-//ScalesStorageEngineLocalStorage 
+var ScalesStorageEngineLocalStorage = /** @class */ (function () {
+    function ScalesStorageEngineLocalStorage() {
+        this.products = [];
+    }
+    //implimented methods
+    ScalesStorageEngineLocalStorage.prototype.addItem = function (item) {
+        this.getItemsFromLS(); //получаем все продукты в массив
+        var index = this.products.push(item);
+        localStorage.setItem('scalesProducts', JSON.stringify(this.products));
+        return index - 1;
+    };
+    ScalesStorageEngineLocalStorage.prototype.getItem = function (index) {
+        this.getItemsFromLS(); //получаем все продукты в массив
+        if (this.products.length > 0 && index < this.products.length) {
+            return this.products[index];
+        }
+    };
+    ScalesStorageEngineLocalStorage.prototype.getCount = function () {
+        this.getItemsFromLS();
+        return this.products.length;
+    };
+    //вынимает из Local Storage продукты и ложит в массив products
+    ScalesStorageEngineLocalStorage.prototype.getItemsFromLS = function () {
+        if (localStorage.getItem('scalesProducts') != null) {
+            // получаем хэш из продуктов
+            var productsHash = JSON.parse(localStorage.getItem('scalesProducts'));
+            for (var _i = 0, productsHash_1 = productsHash; _i < productsHash_1.length; _i++) {
+                var item = productsHash_1[_i];
+                var prod = new Product(item.name, item.weight);
+                this.products.push(prod);
+            }
+        }
+    };
+    return ScalesStorageEngineLocalStorage;
+}());
 /**класс весы */
 var Scales = /** @class */ (function () {
     function Scales(_storageEngine) {
@@ -52,9 +86,11 @@ var Scales = /** @class */ (function () {
 }());
 /**Product classes */
 var Product = /** @class */ (function () {
-    function Product() {
-        this.weight = 500;
-        this.name = 'Какой-то продукт!';
+    function Product(_name, _weight) {
+        this.weight = 0;
+        this.name = '';
+        this.weight = _weight;
+        this.name = _name;
     }
     Product.prototype.getName = function () {
         return this.name;
@@ -62,19 +98,39 @@ var Product = /** @class */ (function () {
     Product.prototype.getScale = function () {
         return this.weight;
     };
+    // для сохранения в Local Storage
+    Product.prototype.toJSON = function () {
+        var hash = {
+            $type: 'Product',
+            weight: this.weight,
+            name: this.name,
+        };
+        return hash;
+    };
+    Product.prototype.fromJSON = function (productHash) {
+        return new Product(productHash.name, productHash.weight);
+    };
     return Product;
 }());
 /*main programm */
 var scalesStorageEngineArray = new ScalesStorageEngineArray();
 // создаем весы с хранением в массиве
 var scalesArray = new Scales(scalesStorageEngineArray);
-var prod1 = new Product();
-var prod2 = new Product();
-var prod3 = new Product();
-var prod4 = new Product();
+var prod1 = new Product('Банан', 300);
+var prod2 = new Product('Колбаса', 500);
+var prod3 = new Product('Хлеб черный', 615);
+var prod4 = new Product('Авокадо', 250);
 scalesArray.add(prod1);
 scalesArray.add(prod3);
 scalesArray.add(prod2);
+console.log('Храним в Array');
 console.log(scalesArray.getSumScale());
 console.log(scalesArray.getNameList());
+// хранение в localStorage
+var scalesStorageEngineLocalStorage = new ScalesStorageEngineLocalStorage();
+var scalesLocalStorage = new Scales(scalesStorageEngineLocalStorage);
+console.log('Храним в Local Storage');
+scalesLocalStorage.add(prod1);
+scalesLocalStorage.add(prod4);
+scalesLocalStorage.add(prod2);
 //# sourceMappingURL=app.js.map

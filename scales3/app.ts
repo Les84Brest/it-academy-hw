@@ -58,7 +58,8 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
 
   }
   getCount(): number {
-    throw new Error("Method not implemented.");
+    this.getItemsFromLS();
+    return this.products.length;
   }
 
   //вынимает из Local Storage продукты и ложит в массив products
@@ -70,7 +71,7 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
       let productsHash = JSON.parse(localStorage.getItem('scalesProducts'));
       
       for (const item of productsHash) {
-        let prod:Product = Product.fromJSON(item);
+        let prod:Product = new Product(item.name, item.weight);
         this.products.push(prod);
       }
 
@@ -141,7 +142,7 @@ class Product {
     return this.weight;
   }
 // для сохранения в Local Storage
-  static toJSON(): Object{
+  toJSON(): Object{
     let hash = {
       $type: 'Product',
       weight: this.weight,
@@ -150,7 +151,7 @@ class Product {
     return hash;
   }
 
-  static fromJSON(productHash: {name:string, weight: number} ):Product{
+  fromJSON(productHash: {name:string, weight: number} ):Product{
     return new Product(productHash.name, productHash.weight);
   }
 }
@@ -171,6 +172,17 @@ scalesArray.add(prod1);
 scalesArray.add(prod3);
 scalesArray.add(prod2);
 
+console.log('Храним в Array');
 console.log(scalesArray.getSumScale());
 console.log(scalesArray.getNameList());
 
+// хранение в localStorage
+
+let scalesStorageEngineLocalStorage = new ScalesStorageEngineLocalStorage();
+
+let scalesLocalStorage = new Scales(scalesStorageEngineLocalStorage);
+
+console.log('Храним в Local Storage');
+scalesLocalStorage.add(prod1);
+scalesLocalStorage.add(prod4);
+scalesLocalStorage.add(prod2ы);
