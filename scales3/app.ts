@@ -40,6 +40,13 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
 
   products: Product[] = [];
 
+  constructor(){
+    // обнуляем localStorage для чистоты эксперимента
+    if(localStorage.getItem('scalesProducts') != null){
+      localStorage.removeItem('scalesProducts');
+    }
+  }
+
   //implimented methods
 
   addItem(item: Product): number {
@@ -62,18 +69,25 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
     return this.products.length;
   }
 
-  //вынимает из Local Storage продукты и ложит в массив products
+  //вынимает из Local Storage продукты ложит в массив products 
+  // обнуляет localStorage
 
-  private getItemsFromLS() {
-    if (localStorage.getItem('scalesProducts') != null) {
+  private getItemsFromLS():void {
+    
+   
+    let itemsFromLS = localStorage.getItem('scalesProducts') ;
+    if (itemsFromLS != null) {
+      
       // получаем хэш из продуктов
-      
       let productsHash = JSON.parse(localStorage.getItem('scalesProducts'));
-      
+      //localStorage.setItem('scalesProducts', null); // обнуляем localStorage 
+      let newProducts:Array<Product> = [];
+      // создаем массив объектов Product
       for (const item of productsHash) {
         let prod:Product = new Product(item.name, item.weight);
-        this.products.push(prod);
+        newProducts.push(prod);
       }
+      this.products = newProducts; //обновляем продукты
 
     }
   }
@@ -122,9 +136,7 @@ class Scales<StorageEngine extends IStorageEngine> {
 }
 
 
-
-
-/**Product classes */
+/**Product class*/
 
 class Product {
   private weight = 0;
@@ -183,6 +195,11 @@ let scalesStorageEngineLocalStorage = new ScalesStorageEngineLocalStorage();
 let scalesLocalStorage = new Scales(scalesStorageEngineLocalStorage);
 
 console.log('Храним в Local Storage');
-scalesLocalStorage.add(prod1);
+scalesLocalStorage.add(prod2);
 scalesLocalStorage.add(prod4);
-scalesLocalStorage.add(prod2ы);
+scalesLocalStorage.add(prod3);
+scalesLocalStorage.add(prod1);
+
+console.log(scalesLocalStorage.getSumScale());
+
+console.log(scalesLocalStorage.getNameList());

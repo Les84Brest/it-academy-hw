@@ -19,6 +19,10 @@ var ScalesStorageEngineArray = /** @class */ (function () {
 var ScalesStorageEngineLocalStorage = /** @class */ (function () {
     function ScalesStorageEngineLocalStorage() {
         this.products = [];
+        // обнуляем localStorage для чистоты эксперимента
+        if (localStorage.getItem('scalesProducts') != null) {
+            localStorage.removeItem('scalesProducts');
+        }
     }
     //implimented methods
     ScalesStorageEngineLocalStorage.prototype.addItem = function (item) {
@@ -37,16 +41,22 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
         this.getItemsFromLS();
         return this.products.length;
     };
-    //вынимает из Local Storage продукты и ложит в массив products
+    //вынимает из Local Storage продукты ложит в массив products 
+    // обнуляет localStorage
     ScalesStorageEngineLocalStorage.prototype.getItemsFromLS = function () {
-        if (localStorage.getItem('scalesProducts') != null) {
+        var itemsFromLS = localStorage.getItem('scalesProducts');
+        if (itemsFromLS != null) {
             // получаем хэш из продуктов
             var productsHash = JSON.parse(localStorage.getItem('scalesProducts'));
+            //localStorage.setItem('scalesProducts', null); // обнуляем localStorage 
+            var newProducts = [];
+            // создаем массив объектов Product
             for (var _i = 0, productsHash_1 = productsHash; _i < productsHash_1.length; _i++) {
                 var item = productsHash_1[_i];
                 var prod = new Product(item.name, item.weight);
-                this.products.push(prod);
+                newProducts.push(prod);
             }
+            this.products = newProducts; //обновляем продукты
         }
     };
     return ScalesStorageEngineLocalStorage;
@@ -130,7 +140,10 @@ console.log(scalesArray.getNameList());
 var scalesStorageEngineLocalStorage = new ScalesStorageEngineLocalStorage();
 var scalesLocalStorage = new Scales(scalesStorageEngineLocalStorage);
 console.log('Храним в Local Storage');
-scalesLocalStorage.add(prod1);
-scalesLocalStorage.add(prod4);
 scalesLocalStorage.add(prod2);
+scalesLocalStorage.add(prod4);
+scalesLocalStorage.add(prod3);
+scalesLocalStorage.add(prod1);
+console.log(scalesLocalStorage.getSumScale());
+console.log(scalesLocalStorage.getNameList());
 //# sourceMappingURL=app.js.map
