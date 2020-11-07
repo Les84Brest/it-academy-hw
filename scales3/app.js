@@ -32,10 +32,9 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
         return index - 1;
     };
     ScalesStorageEngineLocalStorage.prototype.getItem = function (index) {
-        this.getItemsFromLS(); //получаем все продукты в массив
-        if (this.products.length > 0 && index < this.products.length) {
-            return this.products[index];
-        }
+        var productHash = this.getProductHashFromLS();
+        var product = new Product(productHash[index].name, productHash[index].weight);
+        return product;
     };
     ScalesStorageEngineLocalStorage.prototype.getCount = function () {
         this.getItemsFromLS();
@@ -43,6 +42,9 @@ var ScalesStorageEngineLocalStorage = /** @class */ (function () {
     };
     //вынимает из Local Storage продукты ложит в массив products 
     // обнуляет localStorage
+    ScalesStorageEngineLocalStorage.prototype.getProductHashFromLS = function () {
+        return JSON.parse(localStorage.getItem('scalesProducts'));
+    };
     ScalesStorageEngineLocalStorage.prototype.getItemsFromLS = function () {
         var itemsFromLS = localStorage.getItem('scalesProducts');
         if (itemsFromLS != null) {
@@ -94,7 +96,7 @@ var Scales = /** @class */ (function () {
     };
     return Scales;
 }());
-/**Product classes */
+/**Product class*/
 var Product = /** @class */ (function () {
     function Product(_name, _weight) {
         this.weight = 0;

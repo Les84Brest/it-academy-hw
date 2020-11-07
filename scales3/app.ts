@@ -58,10 +58,9 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
 
   }
   getItem(index: number): Product {
-    this.getItemsFromLS(); //получаем все продукты в массив
-    if(this.products.length > 0 && index < this.products.length){
-      return this.products[index];
-    }
+    let productHash:any[] = this.getProductHashFromLS();
+    let product: Product = new Product( productHash[index].name, productHash[index].weight );
+    return product;
 
   }
   getCount(): number {
@@ -72,6 +71,10 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
   //вынимает из Local Storage продукты ложит в массив products 
   // обнуляет localStorage
 
+  private getProductHashFromLS():Array<object>|null {
+    return JSON.parse(localStorage.getItem('scalesProducts'));
+    
+  }
   private getItemsFromLS():void {
     
    
