@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <h3>hello</h3>
+  <script>
+
+
+
+    function curry(func) {
+
+      return function curried(...argssd) {
+        console.log(argssd);
+        if (args.length >= func.length) {
+          return func.apply(this, args);
+        } else {
+          return function (...args2) {
+            return curried.apply(this, args.concat(args2));
+          }
+        }
+      };
+
+    }
+    function ostdel(a, b) {
+      return a %b ;
+    }
+    let curriedSum = curry(ostdel);
+    console.log(curriedSum(16,3));
+    console.log(curriedSum(8,4));
+  </script>
+</body>
+
+</html>
