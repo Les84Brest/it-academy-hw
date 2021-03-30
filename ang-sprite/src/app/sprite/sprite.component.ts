@@ -34,8 +34,8 @@ private spiteClick:EventEmitter<string> =new EventEmitter<string>();
 constructor() { }
 
 handleClick(){
-  this.offsetX = Math.floor(Math.random()*4)*192;
-  this.offsetY = Math.floor(Math.random()*4)*280;
+  this.offsetX = -(Math.floor(Math.random()*12)*192);
+  this.offsetY = -(Math.floor(Math.random()*3)*280);
   this.spiteClick.emit('clicked');
 
 }
