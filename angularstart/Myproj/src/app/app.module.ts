@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { WorkHoleComponent } from './work-hole/work-hole.component';
+import { FormComponent } from './FormComponent/form.component';
+import {LinkComponent} from './LinkComponent/link.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    WorkHoleComponent
+    LinkComponent,
+	FormComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule, FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

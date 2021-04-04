@@ -1,0 +1,21 @@
+<h3>
+  Регистрация машины
+
+</h3>
+
+
+<form #fff="ngForm" (ngSubmit)="FormSubmit(fff)" class="ang-form">
+  <div class="input__wrap">
+    <label for="car_name">Марка машины</label>
+    <input id="car_name" type="text"   name="title" [(ngModel)]="carName" required></div>
+  <div class="input__wrap">
+    <label for="car_number">Гос номер</label>
+    <input type="car_number" type="text" name="num" [(ngModel)]="carNum" pattern="\d\d\-\d\d.+"></div>
+    <input type=submit value="установить">
+</form> 
+
+<p>Форма только что закончилась</p>
+
+<p> {{getCarRegistration()|date:"MMMM"}} </p>
+<p>Машина стоимостью {{carPrice|currency:"USD":false:"3.5-10"}}</p>
+<p>Хозяином машины является {{carOwner|uppercase}}</p>

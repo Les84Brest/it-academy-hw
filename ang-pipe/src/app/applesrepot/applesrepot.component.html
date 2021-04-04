@@ -1,0 +1,10 @@
+<div class="pipe__wrap">
+  <label for="pipeinput" > Введите число яблок</label>
+  <input type="number" id="pipeinput" #apple  (input) = "false">
+</div>
+
+<div class="apl-report">
+  <p>За 2020 год было выращенно {{apple.value | numword:'яблоко':'яблока':'яблок'}}</p>
+  
+</div>
+

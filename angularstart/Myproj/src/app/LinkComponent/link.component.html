@@ -1,0 +1,10 @@
+<h3>
+  Линк компонент заработал!!!
+</h3>
+
+<input type="text" #comm (input)="false">
+<!-- <input type="button" (click)="currentComment=commentRef.nativeElement.value" value="установить"> -->
+<input type="button" (click)="setComment()" value="установить">
+<p>
+ Отзыв на эту штуку - {{currentComment}}
+</p>
