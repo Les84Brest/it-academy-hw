@@ -1,0 +1,31 @@
+<h2 class="ticket-office__title">Кассы кинотеатра</h2>
+<div class="ticket-office__content">
+  <div class="ticket-office online">
+    <h3 class="ticket-office__to-title">Онлайн касса</h3>
+    <input [value]='onlineTickets' (input)="onlineTickets = $event.target.value" type="number" name="cnt_online"
+    class="ticket-office__input" min="1" max="10">
+    <input type="button" value="Получить" (click)="clickHelperOnline()">
+  </div>
+  <div class="ticket-office ofline">
+    <h3 class="ticket-office__to-title"> Касса кинотеатра</h3>
+    <input [value]='offlineTickets' (input)="offlineTickets = $event.target.value" type="number" name="cnt_offline"
+      class="ticket-office__input" min="1" max="10">
+    <input type="button" value="Получить" (click)="clickHelperOffline()">
+  </div>
+</div>
+<div *ngIf="showMessage" class="ticket-info__wrap">
+  <div class="ticket-info" [ngClass]="messageClases"  >
+    <h2 class="ticket-info__title">Информация о билетах</h2>
+    <p class="ticket-info__text" *ngIf="messageError == false; else error_msg">
+      Вы заказали
+      {{orderedTicketsCount}}{{orderedTicketsCount|numword:',билет':'билета':'билетов'}} под номерами
+      <span class="ticket__num" *ngFor="let ticket of orderedTickets; let last =  last">{{renderTicket(ticket,
+        last)}}</span>.
+    </p>
+    <ng-template #error_msg>
+      <p class="ticket-info__text">
+        {{orderedTickets}}
+      </p>
+    </ng-template>
+  </div>
+</div>
