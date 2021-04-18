@@ -1,0 +1,39 @@
+<div class="product-card" >
+  <div class="product__wrap">
+    <div class="product__left">
+      <!-- не понятно как в свойства для директивы можно  подставлять данные автоматически -->
+      <!-- из переменных или методов класса -->
+      <div 
+      spritebg
+      sprite-url =  "../assets/kol-JBL.jpg"
+      sprite-offset-x='0' 
+      sprite-offset-y='0' 
+      sprite-width='400'
+      sprite-height='400'
+      class="product__slider" 
+      style="
+       background-repeat: no-repeat;
+  "></div>
+    </div>
+    <div class="product_right">
+      <h2 class="product__title">
+        {{currentProduct.productName}}
+      </h2>
+      <div class="product__price">
+        {{currentProduct.price}}
+      </div>
+
+      <h3 class="product__subtitle">Характеристики</h3>
+      <div class="product__character">
+        <span class="character__name">Время автономной работы</span>
+        <span class="character__value">{{currentProduct.workTime}}</span>
+      </div>
+      <div class="product__character">
+        <span class="character__name">Класс пылевлагозащиты</span>
+        <span class="character__value">IP {{currentProduct.ip}} изображение </span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
