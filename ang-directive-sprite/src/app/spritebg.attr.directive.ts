@@ -4,30 +4,28 @@
   selector: "[spritebg]",
 })
 export class SpriteBgDirective implements AfterViewInit {
-  @Input("spritebg")
-  private startSprite: string;
-
-  offsetX: number;
+  @Input('sprite-url') spriteURL:string;
+  @Input("sprite-offset-x") offsetX: number;
+  
   offsetY: number;
   spriteWidth: number;
   spriteHeight: number;
-  spriteURL: string;
-
+  
   imageNumber: number = 1;
  
 
   constructor(
     private element: ElementRef,
-    @Attribute("sprite-offset-x") offsetX: number,
+   /* @Attribute("sprite-offset-x") offsetX: number,*/
     @Attribute("sprite-offset-y") offsetY: number,
     @Attribute("sprite-width") spriteWidth: number,
     @Attribute("sprite-height") spriteHeight: number,
-    @Attribute("sprite-url") spriteURL: string = "../assets/default-smile.jpg",
+   /* @Attribute("sprite-url") spriteURL: string = "../assets/default-smile.jpg",*/
 
   ) {
 
-    this.spriteURL = spriteURL || "../assets/default-smile.jpg";
-    this.offsetX = offsetX || 0;
+    // this.spriteURL = spriteURL || "../assets/default-smile.jpg";
+    // this.offsetX = offsetX || 0;
     this.offsetY = offsetY || 0;
     this.spriteWidth = spriteWidth || 400;
     this.spriteHeight = spriteHeight || 400;
@@ -35,7 +33,7 @@ export class SpriteBgDirective implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('spirtURL', this.spriteURL);
+    
 
     this.element.nativeElement.style.backgroundImage = `url(${this.spriteURL})`;
     this.element.nativeElement.style.width = this.spriteWidth + 'px';
@@ -81,23 +79,6 @@ export class SpriteBgDirective implements AfterViewInit {
     
   }
 
-  // colors:Array<string>
-  //   =['red','green','blue','cyan','magenta','yellow'];
-
-  // // привязываем стилевое свойсто хост-компонента (родителя)
-  // // к свойству класса hostBgColor
-  // @HostBinding("style.backgroundColor") 
-  // private hostBgColor:string;
-
-  // // обработчиком события click у хост-компонента будет этот метод
-  // @HostListener("click")
-  // setRandomColor():void {
-  //   let randomColorIndex:number
-  //     =Math.floor(Math.random()*this.colors.length);
-  //   let randomColor:string
-  //     =this.colors[randomColorIndex];
-  //   // меняем hostBgColor - меняется фоновый цвет хоста
-  //   this.hostBgColor=randomColor;
-  // }
+  
 
 }

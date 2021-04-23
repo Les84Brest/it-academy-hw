@@ -3,10 +3,11 @@
     <div class="product__left">
       <!-- не понятно как в свойства для директивы можно  подставлять данные автоматически -->
       <!-- из переменных или методов класса -->
+      <!-- "../assets/kol-JBL.jpg" -->
       <div 
       spritebg
-      sprite-url =  "../assets/kol-JBL.jpg"
-      sprite-offset-x='0' 
+      [sprite-url] = "getImageURL()"
+      [sprite-offset-x]="getOffsetX()"
       sprite-offset-y='0' 
       sprite-width='400'
       sprite-height='400'

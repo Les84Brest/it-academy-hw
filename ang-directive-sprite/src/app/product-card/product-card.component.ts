@@ -19,7 +19,7 @@ type Product ={
 export class ProductCardComponent {
 
   spriteSrc: string = '../assets/kol-JBL.jpg';
-  @Input('sprite-url') spriteURL:string;
+  
  
   productData: Array<Product> = [
     {
@@ -45,12 +45,16 @@ export class ProductCardComponent {
   constructor(
     
   ) { 
-    this.currentProduct = this.productData[0];
+    this.currentProduct = this.productData[1];
    
     
   }
   getImageURL():string{
     return this.currentProduct.image;
+  }
+
+  getOffsetX():number{
+    return 153;
   }
 
 }

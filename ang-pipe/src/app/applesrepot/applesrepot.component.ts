@@ -20,5 +20,5 @@ export class ApplesReport {
     value: 350,
   }
   constructor(){}
-
+  
 }
